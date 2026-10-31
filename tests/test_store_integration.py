@@ -156,3 +156,122 @@ def test_resumed_ingestion_equals_clean_remote_state(index, tmp_path):
         baseline.close()
         clean.drop()
         clean.close()
+
+
+@pytest.mark.parametrize("mode", ["dense", "sparse", "hybrid"])
+def test_qualified_authorization_excludes_colliding_private_key(index, tmp_path, mode):
+    pipeline = Ingestor(index, tmp_path / "manifest.sqlite")
+    docs = [
+        Document(id="same", revision="1", title="", text="same text", tenant=t)
+        for t in ("public", "red")
+    ]
+    try:
+        pipeline.ingest(docs)
+        hits = index.search(
+            "same", tenant="red", mode=mode, authorized_sources=[("public", docs[0].key)]
+        )
+        assert [h.chunk.tenant for h in hits] == ["public"]
+        assert index.search("same", tenant="red", mode=mode, authorized_sources=[]) == []
+    finally:
+        pipeline.close()
+
+
+def test_ingestion_batch_conflict_is_atomic(index, tmp_path):
+    pipeline = Ingestor(index, tmp_path / "manifest.sqlite")
+    original = Document(id="same", revision="1", title="", text="original")
+    try:
+        with pytest.raises(ValueError, match="revision change"):
+            pipeline.ingest([original, original.model_copy(update={"text": "changed"})])
+        assert pipeline.events() == []
+        assert pipeline.current_documents() == []
+        assert index.all_points() == []
+        assert pipeline.ingest([original, original])["enqueued"] == 1
+    finally:
+        pipeline.close()
+
+
+def test_ingestion_rejects_historical_revision_after_update_and_delete(index, tmp_path):
+    path = tmp_path / "manifest.sqlite"
+    original = Document(id="same", revision="1", title="", text="original")
+    pipeline = Ingestor(index, path)
+    pipeline.ingest([original])
+    pipeline.delete(original.id, original.tenant)
+    pipeline.ingest([original.model_copy(update={"revision": "2"})])
+    pipeline.close()
+    pipeline = Ingestor(index, path)
+    try:
+        with pytest.raises(ValueError, match="historical revision"):
+            pipeline.ingest([original])
+        assert pipeline.current_documents()[0].revision == "2"
+        assert pipeline.reconcile()["consistent"]
+    finally:
+        pipeline.close()
+
+
+def test_open_index_rejects_configuration_drift_before_encoding(index, monkeypatch):
+    import vector_masterclass.store as store
+
+    original = store.representation_contract
+    monkeypatch.setattr(
+        store, "representation_contract", lambda key: original(key) | {"revision": "changed"}
+    )
+    with pytest.raises(ValueError, match="configuration changed"):
+        index.search("query", tenant="public")
+    monkeypatch.undo()
+
+
+@pytest.mark.parametrize("mode", ["dense", "sparse", "hybrid"])
+def test_api_serves_public_collision_after_private_grant_revoked(index, tmp_path, mode):
+    from fastapi.testclient import TestClient
+
+    from vector_masterclass.policy import PolicyStore, seed_demo_policy
+    from vector_masterclass.service import SearchService, create_app
+
+    pipeline = Ingestor(index, tmp_path / "manifest.sqlite")
+    policy = PolicyStore(tmp_path / "policy.sqlite")
+    docs = [
+        Document(id="same", revision="1", title="", text="same text", tenant=t)
+        for t in ("public", "red")
+    ]
+    pipeline.ingest(docs)
+    seed_demo_policy(policy, docs)
+    service = SearchService(index, policy)
+    try:
+        with TestClient(create_app(service)) as client:
+            kwargs = {
+                "json": {"query": "same", "mode": mode},
+                "headers": {"Authorization": "Bearer demo-red-token"},
+            }
+            assert len(client.post("/search", **kwargs).json()["results"]) == 2
+            policy.revoke_grant("alice", "red", "same")
+            response = client.post("/search", **kwargs)
+            assert response.status_code == 200
+            assert [h["chunk"]["tenant"] for h in response.json()["results"]] == ["public"]
+    finally:
+        service.close()
+        policy.close()
+        pipeline.close()
+
+
+def test_identity_pipeline_upgrade_removes_previous_mapped_points(index, tmp_path):
+    from vector_masterclass.chunking import chunk_document
+
+    pipeline = Ingestor(index, tmp_path / "manifest.sqlite", include_sparse=False)
+    doc = Document(id="d", revision="1", title="", text="source text")
+    pipeline.ingest([doc])
+    current = chunk_document(doc)[0]
+    legacy = current.model_copy(update={"id": str(uuid4())})
+    # Model an existing manifest whose earlier identity algorithm emitted another UUID.
+    index.delete_ids([current.id])
+    index.upsert([legacy], document_id=doc.id, include_sparse=False)
+    with pipeline.db:
+        pipeline.db.execute("UPDATE point_map SET point_id=?", (legacy.id,))
+        pipeline.db.execute("UPDATE events SET pipeline_signature='legacy'")
+        pipeline.db.execute("UPDATE applied SET pipeline_signature='legacy'")
+    try:
+        assert pipeline.ingest([doc])["enqueued"] == 1
+        assert {p.id for p in index.all_points()} == {current.id}
+        assert pipeline.reconcile()["consistent"]
+        assert pipeline.ingest([doc])["enqueued"] == 0
+    finally:
+        pipeline.close()

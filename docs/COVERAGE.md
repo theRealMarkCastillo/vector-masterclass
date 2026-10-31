@@ -1,5 +1,25 @@
 # Course delivery and validation evidence
 
+## Review validation — current implementation
+
+The full code review fixed seven findings covering source identity collisions, immutable revision history, atomic batch validation, tenant-qualified authorization, model cache/configuration drift, notebook provenance, and contradictory completion evidence. See [REVIEW.md](REVIEW.md) for severity, regression coverage, and index migration notes.
+
+| Gate | Current review evidence |
+| --- | --- |
+| Tests | **71/71 passed**, including real Qdrant integration. One upstream Starlette/httpx deprecation warning remains. |
+| Complete required course | **44/44 passed** in `20261031T045209Z-notebooks-54bede`, with fresh kernels and offline CPU/MPS inference. The capstone audit also passes against the final workspace source. |
+| Environment isolation | Locked uv environment created for this review and a separate Compose project on loopback port 26333. The final provenance-only rerun reused this isolated environment after a successful full run on initially empty volumes. Pinned bootstrap caches reused. The user's active Jupyter session and ordinary Qdrant service were not interrupted. |
+| Static validation | Ruff lint/format and diff checks pass. All 45 committed notebook sources pass syntax, metadata, coverage, and solution checks. Local learner outputs and empty cells remain uncommitted and preserved. |
+| Frozen public evaluation | `20261031T043730Z-31a568/public_retrieval`: all 5,183 documents and forty fixed queries scored; all four methods reproduce their previous relevance metrics, including the reranker regression. |
+| Gold review | The fourteen approved labels remain unchanged; canonical spans and approval hashes pass. |
+| Export checks | Eight affected HTML exports rendered with viewport checks; ingestion, filtering, context, and capstone pages visually inspected. Hash record: `artifacts/review-validation/visual-review.json`. |
+
+The measured lesson experiment time totals about 291.83 seconds, excluding kernel startup/export overhead. The largest conservative memory sum is about 5.02 GiB on the same 96 GiB host. These are descriptive local measurements with the accounting limitations below, not production guarantees. The optional three-node lesson was not rerun because its replication logic was unchanged; its earlier evidence remains historical.
+
+[COVERAGE.json](COVERAGE.json) records the current run's per-lesson manifest hashes and `artifacts/review-validation/report.json`. The original runs below are retained as historical validation of the earlier implementation; they do not certify the review changes or the new notebook hash convention.
+
+## Original delivery validation — historical
+
 The implemented course contains 44 required notebooks plus optional 27b. `configs/course.json` is the explicit coverage inventory; lesson 29 audits every required predecessor and rejects missing, failed, non-live, or source/configuration-drifted evidence. The initial reviewed-design commit is `d5055e3`; implementation is `bb3a648`, followed by architecture documentation in `d452138`.
 
 **M0–M7 are complete for the documented local course scope.** Both complete required-course runs passed, including a fresh clone/environment and empty Qdrant volumes. The original service was restored and independently verified ready with its original `vector-masterclass_qdrant-data` and `vector-masterclass_qdrant-snapshots` volumes. [COVERAGE.json](COVERAGE.json) records every required lesson's manifest hash for both runs and the supporting evidence hashes.

@@ -1,7 +1,9 @@
 """Immutable source identity and evidence anchored before chunking."""
 
 import hashlib
+import json
 from typing import Literal
+from urllib.parse import quote
 from uuid import NAMESPACE_URL, uuid5
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
@@ -24,7 +26,7 @@ class Document(BaseModel):
 
     @property
     def key(self) -> str:
-        return f"{self.id}@{self.revision}"
+        return f"{quote(self.id, safe='')}@{quote(self.revision, safe='')}"
 
     @property
     def sha256(self) -> str:
@@ -101,7 +103,7 @@ class Chunk(BaseModel):
     ):
         if not 0 <= start < end <= len(doc.text):
             raise ValueError("Chunk span is outside source text")
-        identity = f"{doc.tenant}:{doc.key}:{doc.sha256}:{strategy}:{start}:{end}"
+        identity = json.dumps([doc.tenant, doc.key, doc.sha256, strategy, start, end])
         return cls(
             id=str(uuid5(NAMESPACE_URL, identity)),
             document_key=doc.key,

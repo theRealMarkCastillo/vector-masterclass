@@ -85,7 +85,7 @@ class SearchService:
             hits = self.index.search(
                 request.query,
                 tenant=identity.tenant,
-                document_keys=[d.key for d in sources],
+                authorized_sources=[(d.tenant, d.key) for d in sources],
                 mode=request.mode,
                 k=request.k,
                 timings=stages,

@@ -17,7 +17,11 @@ def representation_contract(key: str = "dense") -> dict:
     return {k: v for k, v in cfg.items() if k not in {"device", "license", "weight_file"}}
 
 
-def tenant_filter(tenant: str, document_keys: list[str] | None = None) -> models.Filter:
+def tenant_filter(
+    tenant: str,
+    document_keys: list[str] | None = None,
+    authorized_sources: list[tuple[str, str]] | None = None,
+) -> models.Filter:
     if not tenant:
         raise ValueError("An explicit tenant is required")
     conditions = [
@@ -28,6 +32,34 @@ def tenant_filter(tenant: str, document_keys: list[str] | None = None) -> models
         conditions.append(
             models.FieldCondition(key="document_key", match=models.MatchAny(any=document_keys))
         )
+    if authorized_sources is not None:
+        # A document key is only unique inside its tenant. Keep each tenant/key
+        # pair together; separate MatchAny lists would admit their cross product.
+        groups = {}
+        for source_tenant, key in authorized_sources:
+            groups.setdefault(source_tenant, []).append(key)
+        if groups:
+            conditions.append(
+                models.Filter(
+                    should=[
+                        models.Filter(
+                            must=[
+                                models.FieldCondition(
+                                    key="tenant", match=models.MatchValue(value=t)
+                                ),
+                                models.FieldCondition(
+                                    key="document_key", match=models.MatchAny(any=keys)
+                                ),
+                            ]
+                        )
+                        for t, keys in sorted(groups.items())
+                    ]
+                )
+            )
+        else:
+            conditions.append(
+                models.FieldCondition(key="document_key", match=models.MatchAny(any=[]))
+            )
     return models.Filter(must=conditions)
 
 
@@ -86,6 +118,14 @@ class VectorIndex:
         )
 
     def verify_contract(self):
+        current = {
+            "dense": representation_contract(self.key),
+            "sparse": representation_contract("sparse"),
+        }
+        if fingerprint(current) != self.signature:
+            raise ValueError(
+                "Representation contract mismatch: model configuration changed; recreate the index handle and migrate"
+            )
         info = self.client.get_collection(self.name)
         metadata = info.config.metadata or {}
         if metadata.get("representation_signature") != self.signature:
@@ -135,6 +175,7 @@ class VectorIndex:
         k: int = 5,
         candidate_k: int = 20,
         document_keys: list[str] | None = None,
+        authorized_sources: list[tuple[str, str]] | None = None,
         exact: bool = False,
         timings: dict | None = None,
     ) -> list[Hit]:
@@ -149,7 +190,7 @@ class VectorIndex:
         if timings is not None:
             timings["contract_check"] = time.perf_counter() - started
         started = time.perf_counter()
-        query_filter = tenant_filter(tenant, document_keys)
+        query_filter = tenant_filter(tenant, document_keys, authorized_sources)
         dense = (
             self.encoder([text], key=self.key, role="query")[0].tolist()
             if mode != "sparse"

@@ -30,12 +30,12 @@ def queries(split: str | None = None) -> list[Query]:
 
 
 def validate_gold() -> dict:
-    docs = {d.key: d for d in documents(active_only=False)}
+    docs = {(d.tenant, d.key): d for d in documents(active_only=False)}
     families = {}
     for query in queries():
         for unit in query.evidence:
             for span in unit.alternatives:
-                doc = docs[span.document_key]
+                doc = docs[(span.tenant, span.document_key)]
                 span.validate_source(doc)
                 if doc.tenant not in {"public", query.tenant}:
                     raise ValueError("Gold evidence violates query tenant permissions")

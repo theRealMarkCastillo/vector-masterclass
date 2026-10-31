@@ -35,6 +35,7 @@ class Ingestor:
         self.pipeline_signature = fingerprint(
             {
                 "representation": index.signature,
+                "chunk_identity_version": 2,
                 "strategy": strategy,
                 "words": words,
                 "overlap": overlap,
@@ -80,26 +81,50 @@ class Ingestor:
     def ingest(self, documents: list[Document], *, fail_after: int | None = None) -> dict:
         self.replay()
         enqueued = 0
-        for doc in documents:
-            if not doc.active:
-                continue
-            existing = self.db.execute(
-                "SELECT * FROM applied WHERE collection=? AND source_id=? AND tenant=?",
-                (self.index.name, doc.id, doc.tenant),
-            ).fetchone()
-            if existing:
-                if existing["revision"] == doc.revision and existing["source_hash"] != doc.sha256:
-                    raise ValueError("Source text changed without a revision change")
-                if existing["deleted"] and existing["revision"] == doc.revision:
-                    raise ValueError("Refusing to resurrect a deleted source revision")
-                if (
-                    not existing["deleted"]
-                    and existing["source_json"] == doc.model_dump_json()
-                    and existing["pipeline_signature"] == self.pipeline_signature
-                ):
+        # Validate and enqueue the entire batch in one SQLite transaction. The
+        # pending events also form the staged head for repeated IDs in this batch.
+        # Remote writes still happen only in replay, after this transaction commits.
+        with self.db:
+            for doc in documents:
+                if not doc.active:
                     continue
-            self._enqueue(doc, "upsert")
-            enqueued += 1
+                history = self.db.execute(
+                    "SELECT source_json,operation,pipeline_signature FROM events "
+                    "WHERE collection=? AND source_id=? AND tenant=? ORDER BY sequence DESC",
+                    (self.index.name, doc.id, doc.tenant),
+                ).fetchall()
+                if history:
+                    latest = Document.model_validate_json(history[0]["source_json"])
+                    if latest.revision == doc.revision:
+                        if latest.sha256 != doc.sha256:
+                            raise ValueError("Source text changed without a revision change")
+                        if history[0]["operation"] == "delete":
+                            raise ValueError("Refusing to resurrect a deleted source revision")
+                        if (
+                            history[0]["source_json"] == doc.model_dump_json()
+                            and history[0]["pipeline_signature"] == self.pipeline_signature
+                        ):
+                            continue
+                    elif any(
+                        Document.model_validate_json(row["source_json"]).revision == doc.revision
+                        for row in history
+                    ):
+                        raise ValueError(
+                            "Refusing to reuse a historical revision; assign a new revision"
+                        )
+                self.db.execute(
+                    "INSERT INTO events(collection,source_id,tenant,operation,source_json,pipeline_signature) "
+                    "VALUES (?,?,?,?,?,?)",
+                    (
+                        self.index.name,
+                        doc.id,
+                        doc.tenant,
+                        "upsert",
+                        doc.model_dump_json(),
+                        self.pipeline_signature,
+                    ),
+                )
+                enqueued += 1
         applied = self.replay(fail_after=fail_after)
         return {"enqueued": enqueued, "applied": applied, "pending": len(self.pending())}
 

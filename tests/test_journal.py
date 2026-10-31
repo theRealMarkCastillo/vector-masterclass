@@ -42,3 +42,16 @@ def test_gap_rejects_replay_and_checkpoint_crash_replays(tmp_path):
     with pytest.raises(ValueError, match="gap"):
         journal.replay(consumer)
     journal.close()
+
+
+def test_historical_revision_cannot_be_reused(tmp_path):
+    journal = SourceJournal(tmp_path / "journal.sqlite")
+    original = Document(id="d", revision="one", title="", text="original")
+    try:
+        journal.append(original, expected_revision=None)
+        journal.append(original.model_copy(update={"revision": "two"}), expected_revision="one")
+        with pytest.raises(ValueError, match="immutable revision"):
+            journal.append(original, expected_revision="two")
+        assert journal.snapshot()[0] == 2
+    finally:
+        journal.close()

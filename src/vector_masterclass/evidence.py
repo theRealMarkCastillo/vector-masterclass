@@ -14,7 +14,7 @@ from uuid import uuid4
 
 import psutil
 
-from .config import file_hash, root
+from .config import file_hash, fingerprint, root
 
 
 def memory_bytes(value: str) -> int:
@@ -29,7 +29,9 @@ class ResourceMeter:
 
     def __init__(self, docker: bool = True, containers: list[str] | None = None):
         self.docker = docker
-        self.containers = containers or ["vector-masterclass-qdrant-1"]
+        self.containers = containers or [
+            os.environ.get("VMC_QDRANT_CONTAINER", "vector-masterclass-qdrant-1")
+        ]
         self.process_peak = 0
         self.docker_peak = 0
         self.mps_allocated_peak = 0
@@ -167,6 +169,30 @@ def new_run(lesson_id: str) -> Path:
     return root() / "artifacts" / (stamp + "-" + uuid4().hex[:6]) / lesson_id
 
 
+def source_hash(path: Path) -> str:
+    """Hash notebook teaching content, excluding mutable execution/UI state."""
+    if path.suffix != ".ipynb":
+        return file_hash(path)
+    notebook = json.loads(path.read_text())
+    return fingerprint(
+        {
+            "course": notebook.get("metadata", {}).get("course", {}),
+            "cells": [
+                {
+                    "cell_type": cell["cell_type"],
+                    "source": "".join(cell["source"])
+                    if isinstance(cell["source"], list)
+                    else cell["source"],
+                    "attachments": cell.get("attachments", {}),
+                    "tags": cell.get("metadata", {}).get("tags", []),
+                }
+                for cell in notebook["cells"]
+                if "".join(cell["source"]).strip() or cell.get("attachments")
+            ],
+        }
+    )
+
+
 def provenance() -> dict:
     commit = subprocess.run(
         ["git", "rev-parse", "HEAD"], cwd=root(), text=True, capture_output=True
@@ -193,6 +219,16 @@ def provenance() -> dict:
                 "TRANSFORMERS_OFFLINE",
             }
         },
+        "service_environment": {
+            key: os.environ[key]
+            for key in (
+                "VMC_QDRANT_URL",
+                "VMC_QDRANT_CONTAINER",
+                "COMPOSE_PROJECT_NAME",
+                "COMPOSE_FILE",
+            )
+            if key in os.environ
+        },
         "host_total_memory_bytes": psutil.virtual_memory().total,
         "package_versions": {
             key: version(key)
@@ -212,11 +248,12 @@ def provenance() -> dict:
             for path in ["uv.lock", "pyproject.toml", "compose.yaml", ".python-version"]
         },
         "source_hashes": {
-            str(p.relative_to(root())): file_hash(p)
+            str(p.relative_to(root())): source_hash(p)
             for folder in ["src", "scripts", "configs", "datasets", "notebooks"]
             for p in sorted((root() / folder).rglob("*"))
             if p.is_file()
             and p.suffix in {".py", ".json", ".jsonl", ".ipynb"}
             and "downloads" not in p.parts
+            and ".ipynb_checkpoints" not in p.parts
         },
     }

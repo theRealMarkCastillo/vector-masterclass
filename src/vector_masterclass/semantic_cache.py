@@ -52,6 +52,9 @@ class SemanticCache:
         self.verify()
 
     def verify(self):
+        current = fingerprint({"kind": "semantic-cache", "encoder": representation_contract()})
+        if current != self.signature:
+            raise ValueError("Model configuration changed; recreate the semantic cache and migrate")
         if (self.client.get_collection(self.name).config.metadata or {}).get(
             "representation_signature"
         ) != self.signature:

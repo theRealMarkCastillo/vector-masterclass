@@ -90,3 +90,9 @@ Three containers on one Mac share power, storage, VM, and host failure. Independ
 ## Reference choice
 
 For this course, CPU MiniLM plus lexical/hybrid baselines provides a transparent small retrieval system. Native MPS bfloat16 Qwen makes real generation feasible without paid APIs, but observed correctness failures rule out unattended support answers. Advanced models remain explicit downloads. We retain exact search as a fidelity oracle, source-grounded evaluation, and simple independently runnable notebooks. The design earns extra stages only through measured quality or operational need.
+
+## Review-hardened contracts
+
+Document keys encode reserved characters before joining ID and revision. Chunk IDs hash an unambiguous serialized identity, and ingestion records `chunk_identity_version=2` in its pipeline contract. Immutable revision checks cover retained history; enqueueing a new batch is atomic within SQLite, while remote application remains replayable across the SQLite/Qdrant boundary. See [REVIEW.md](REVIEW.md) for upgrade handling of existing indexes and pending events.
+
+The service passes paired `(tenant, document_key)` eligibility to every retrieval stage. A document-key list alone is a revision selector, not a complete authorization policy. Model caches bind to both the configured model and its workspace path; existing index handles reject configuration drift. Notebook evidence hashes teaching content rather than saved execution outputs, and capstone audits check the individual completion checks as well as the summary flag.

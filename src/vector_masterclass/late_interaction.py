@@ -6,13 +6,12 @@ NumPy implementation of the sum of per-query-token maximum similarities.
 
 import json
 import string
-from functools import lru_cache
 
 import numpy as np
 
 from .config import model_config, model_path
 from .hardware import resolve_device, synchronize
-from .models import cpu_setup
+from .models import configuration_cache, cpu_setup
 
 
 def maxsim(query, document):
@@ -24,7 +23,7 @@ def maxsim(query, document):
     return float((q @ d.T).max(axis=1).sum())
 
 
-@lru_cache(maxsize=1)
+@configuration_cache(maxsize=1, key="colbert")
 def _model(device):
     from safetensors.torch import load_file
     from transformers import AutoTokenizer, BertConfig, BertModel

@@ -2,12 +2,32 @@
 
 import os
 import time
-from functools import lru_cache
+from functools import lru_cache, wraps
 
 import numpy as np
 
-from .config import model_config, model_path
+from .config import fingerprint, model_config, model_path
 from .hardware import resolve_device, synchronize
+
+
+def configuration_cache(*, maxsize: int, key: str | None = None):
+    """Bind loaded weights to configuration and workspace, including on cache hits."""
+
+    def decorate(loader):
+        @lru_cache(maxsize=maxsize)
+        def cached(identity, *args, **kwargs):
+            return loader(*args, **kwargs)
+
+        @wraps(loader)
+        def load(*args, **kwargs):
+            model_key = key or (args[0] if args else kwargs["key"])
+            identity = (str(model_path(model_key)), fingerprint(model_config(model_key)))
+            return cached(identity, *args, **kwargs)
+
+        load.cache_clear = cached.cache_clear
+        return load
+
+    return decorate
 
 
 def cpu_setup():
@@ -18,7 +38,7 @@ def cpu_setup():
     return torch
 
 
-@lru_cache(maxsize=2)
+@configuration_cache(maxsize=2)
 def _dense_model(key: str, device: str):
     from sentence_transformers import SentenceTransformer
 
@@ -58,7 +78,7 @@ def embed(
     return result
 
 
-@lru_cache(maxsize=1)
+@configuration_cache(maxsize=1, key="reranker")
 def rerank_model(device: str):
     from sentence_transformers import CrossEncoder
 
@@ -82,7 +102,7 @@ def rerank(query: str, documents: list[str], *, device: str | None = None) -> np
     return result
 
 
-@lru_cache(maxsize=1)
+@configuration_cache(maxsize=1, key="sparse")
 def sparse_model(device: str):
     from transformers import AutoModelForMaskedLM, AutoTokenizer
 
@@ -118,7 +138,7 @@ def sparse_embed(texts: list[str], *, device: str | None = None) -> list[dict]:
     return result
 
 
-@lru_cache(maxsize=1)
+@configuration_cache(maxsize=1)
 def generator_model(key: str, device: str):
     from transformers import AutoModelForCausalLM, AutoTokenizer
 

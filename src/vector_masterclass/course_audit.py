@@ -6,6 +6,16 @@ from .config import file_hash, root
 from .evidence import provenance
 
 
+def checks_passed(manifest):
+    checks = manifest.get("checks")
+    return (
+        manifest.get("passed") is True
+        and isinstance(checks, dict)
+        and bool(checks)
+        and all(value is True for value in checks.values())
+    )
+
+
 def course_spec():
     return json.loads((root() / "configs/course.json").read_text())
 
@@ -22,7 +32,7 @@ def audit_run(run_id: str, *, include_capstone: bool = False):
         if not path.is_file():
             raise ValueError(f"Missing required evidence: {lesson_id}")
         manifest = json.loads(path.read_text())
-        if manifest.get("lesson_id") != lesson_id or manifest.get("passed") is not True:
+        if manifest.get("lesson_id") != lesson_id or not checks_passed(manifest):
             raise ValueError(f"Failed or mismatched lesson evidence: {lesson_id}")
         if manifest.get("live") is not True:
             raise ValueError(f"Required live evidence absent: {lesson_id}")
@@ -64,7 +74,7 @@ def benchmark_evidence():
         manifest = json.loads(path.read_text())
         old = manifest.get("provenance", {})
         if (
-            manifest.get("passed") is True
+            checks_passed(manifest)
             and manifest.get("live") is True
             and old.get("environment_hashes") == current["environment_hashes"]
             and all(

@@ -22,14 +22,18 @@ class FakeIndex:
         self.release.set()
         self.poison = False
 
-    def search(self, query, *, tenant, document_keys, mode, k, timings=None):
+    def search(self, query, *, tenant, authorized_sources, mode, k, timings=None):
         self.calls += 1
         self.started.set()
         assert self.release.wait(2), "Test worker release deadline exceeded"
         docs = (
             self.docs
             if self.poison
-            else [d for d in self.docs if d.tenant in {"public", tenant} and d.key in document_keys]
+            else [
+                d
+                for d in self.docs
+                if d.tenant in {"public", tenant} and (d.tenant, d.key) in authorized_sources
+            ]
         )
         return [
             Hit(id=c.id, score=1, chunk=c) for d in docs for c in chunk_document(d, "document")

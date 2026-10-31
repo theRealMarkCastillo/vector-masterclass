@@ -36,12 +36,18 @@ def test_complete_current_evidence_passes(evidence):
     assert course_audit.audit_run("run")[0]["lesson"] == "00"
 
 
-@pytest.mark.parametrize("change", ["missing", "failed", "replay", "drift"])
+@pytest.mark.parametrize(
+    "change", ["missing", "failed", "replay", "drift", "contradictory", "empty_checks"]
+)
 def test_invalid_evidence_fails(evidence, change):
     path, record = evidence
     if change == "missing":
         path.unlink()
     else:
+        if change == "contradictory":
+            record["checks"]["ran"] = False
+        if change == "empty_checks":
+            record["checks"] = {}
         if change == "failed":
             record["passed"] = False
         if change == "replay":

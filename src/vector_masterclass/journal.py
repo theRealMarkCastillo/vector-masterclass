@@ -29,7 +29,13 @@ class SourceJournal:
             prior = Document.model_validate_json(row[0]) if row else None
             if (prior.revision if prior else None) != expected_revision:
                 raise ValueError("Source revision conflict; stale writer rejected")
-            if prior and prior.revision == doc.revision:
+            reused = self.db.execute(
+                "SELECT 1 FROM changes WHERE json_extract(source_json, '$.tenant')=? "
+                "AND json_extract(source_json, '$.id')=? "
+                "AND json_extract(source_json, '$.revision')=? LIMIT 1",
+                (doc.tenant, doc.id, doc.revision),
+            ).fetchone()
+            if reused:
                 raise ValueError("Each source event requires a new immutable revision")
             sequence = self.db.execute(
                 "INSERT INTO changes(source_json) VALUES (?)", (doc.model_dump_json(),)

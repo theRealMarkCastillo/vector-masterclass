@@ -1,15 +1,13 @@
 """Pinned local CLIP encoders with explicitly aligned normalized projection outputs."""
 
-from functools import lru_cache
-
 import numpy as np
 
 from .config import model_config, model_path
 from .hardware import resolve_device, synchronize
-from .models import cpu_setup
+from .models import configuration_cache, cpu_setup
 
 
-@lru_cache(maxsize=1)
+@configuration_cache(maxsize=1, key="clip")
 def clip_model(device):
     from transformers import CLIPModel, CLIPProcessor
 

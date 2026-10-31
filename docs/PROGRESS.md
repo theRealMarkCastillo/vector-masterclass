@@ -1,5 +1,7 @@
 # Implementation progress
 
+Full implementation review completed: seven findings fixed, 71 tests passed, and all 44 required notebooks rerun against the reviewed code in an isolated new environment. Current run: `20261031T045209Z-notebooks-54bede`. See [REVIEW.md](REVIEW.md) and [COVERAGE.md](COVERAGE.md). The earlier delivery runs below remain historical.
+
 All required M0–M7 outcomes are delivered for the documented local course scope. Both complete 44-lesson runs passed; optional 27b passed separately. See [COVERAGE.md](COVERAGE.md) and [COVERAGE.json](COVERAGE.json) for observed evidence and hashes.
 
 | Milestone | State | Evidence / next gate |
@@ -20,4 +22,4 @@ Complete required runs: `20261031T030745Z-notebooks-f4dedc` and fresh-clone `202
 
 ## Scope update during implementation
 
-The user explicitly changed the hardware constraint to macOS on Apple Silicon only, with CPU and Metal GPU allowed when useful. This supersedes CPU-only wording in the original goal/initial commit. The active goal still covers all M0–M7 outcomes. PyTorch MPS availability and a tensor operation were verified on this host. Qdrant stays in Docker; model inference stays native.
+The user explicitly changed the hardware constraint to macOS on Apple Silicon only, with CPU and Metal GPU allowed when useful. This supersedes CPU-only wording in the original goal/initial commit. The implementation scope continued to cover all M0–M7 outcomes. PyTorch MPS availability and a tensor operation were verified on this host. Qdrant stays in Docker; model inference stays native.
