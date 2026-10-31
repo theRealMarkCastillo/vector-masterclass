@@ -1,6 +1,6 @@
 # Implementation plan
 
-Status: implementation in progress; observed milestone state is tracked in [PROGRESS.md](PROGRESS.md). This plan implements curriculum revision 3 and the [lesson contracts](LESSON_CONTRACTS.md). It does not authorize cloud deployment, paid services, or publication.
+Status: M0–M7 implemented and validated for the documented local course scope; evidence is recorded in [COVERAGE.md](COVERAGE.md) and [PROGRESS.md](PROGRESS.md). This plan implements curriculum revision 3 and the [lesson contracts](LESSON_CONTRACTS.md). It does not authorize cloud deployment, paid services, or publication. The user separately authorized Git initialization, the first commit, and continued implementation; local implementation and evidence commits are complete.
 
 ## Delivery rules
 
@@ -109,7 +109,9 @@ Exit gate: every required lesson is present and verified; resource instructions 
 | Overloaded notebooks and undefined budgets | Stable suffixed lesson contracts with prerequisites, resource profiles, artifacts, and checks. | Per-lesson measured metadata, fresh execution, and M7 coverage audit. |
 | Storage internals lack a dedicated lesson | 05b life of a write, persistence/visibility/indexing, mutations, deletion, and restart distinctions. | M2 observed storage timeline and integration checks, extended in M5. |
 
-## Remaining decisions and when to resolve them
+## Decision checkpoints
+
+These implementation choices have been resolved in `DECISIONS.md`, pinned configuration, and the final coverage report. The original proposed directions below are retained as the design checkpoints, not open blockers.
 
 | Decision | Proposed direction | Required by |
 | --- | --- | --- |

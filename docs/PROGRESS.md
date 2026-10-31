@@ -1,20 +1,22 @@
 # Implementation progress
 
-The active goal is to deliver all required M0–M7 outcomes. Completion requires observed evidence, not only authored files.
+All required M0–M7 outcomes are delivered for the documented local course scope. Both complete 44-lesson runs passed; optional 27b passed separately. See [COVERAGE.md](COVERAGE.md) and [COVERAGE.json](COVERAGE.json) for observed evidence and hashes.
 
 | Milestone | State | Evidence / next gate |
 | --- | --- | --- |
 | Initial Git commit | Complete | `d5055e3` on local `main`; no remote configured. |
 | M0 Apple Silicon pilot | Complete | Pinned dependencies/models/image, CPU dense/reranker/SPLADE and MPS bfloat16 generation observed; ANN control/fidelity probe and final device comparison passed; public data downloaded/checksummed. See DECISIONS.md. |
 | M1 Foundations | Complete | Six notebooks executed in fresh offline kernels and rerun; rendered exports reviewed. User approved fourteen gold labels; approval is hash-bound. Final formatted run `20261031T014911Z-notebooks-837794`. |
-| M2 Retrieval | Complete; final course replay pending | Eight notebooks reran as `20261031T020416Z-notebooks-20f498`; exports reviewed. Real-server ingestion/filter/contract tests pass. Fixed public evaluation includes a reranker regression. |
-| M3 Live RAG | Complete; final course replay pending | Four live notebooks reran as `20261031T021532Z-notebooks-cc149c`; exports reviewed. Claim-level failures documented in RAG_RESULTS.md. |
-| M4 Applications | Executed and visually reviewed; full repeat pending | Twelve service/application lessons pass. Negative routing, anomaly, classification and CLIP results retained; see ADVANCED_RESULTS.md. |
-| M5 Operations | Executed and visually reviewed; full repeat pending | Seven required operations lessons pass. Optional cluster rerun `20261031T025741Z-notebooks-6bda38` adds all-replica acknowledged-point recovery checks and passes. |
-| M6 Advanced | All six executed; export review/final repeat pending | Real Matryoshka and ColBERT plus four live bounded research comparisons pass. Full-context and graph-generation claim failures documented in ADVANCED_RESULTS.md. |
-| M7 Delivery | Implemented; final verification ongoing | 45 authored notebooks, full solutions, learner/instructor/architecture guides, evidence audit and fresh-setup harness. Complete required-course runs and final coverage report remain. |
+| M2 Retrieval | Complete | Eight notebooks pass both complete runs; exports reviewed. Real-server ingestion/filter/contract tests pass. Repeated frozen public metrics are identical and include a reranker regression. |
+| M3 Live RAG | Complete | Four live notebooks pass both complete runs; exports reviewed. Claim-level failures documented in RAG_RESULTS.md. |
+| M4 Applications | Complete | Twelve service/application lessons pass both complete runs. Negative routing, anomaly, classification and CLIP results retained; see ADVANCED_RESULTS.md. |
+| M5 Operations | Complete | Seven required operations lessons pass both complete runs. Optional cluster run `20261031T025741Z-notebooks-6bda38` includes all-replica acknowledged-point recovery. |
+| M6 Advanced | Complete | Real Matryoshka and ColBERT plus four live bounded research comparisons pass both complete runs. Full-context and graph-generation claim failures documented in ADVANCED_RESULTS.md. |
+| M7 Delivery | Complete | 45 notebooks, full solutions, learner/instructor/architecture guides, evidence audit, fresh-setup validation, visual QA, and final coverage report. |
 
 Qdrant 1.17.1 server/client, locked packages, immutable model revisions, and the container digest are verified and recorded. Resource targets pass on the observed 96 GiB host; this is not a physical 16 GiB hardware qualification.
+
+Complete required runs: `20261031T030745Z-notebooks-f4dedc` and fresh-clone `20261031T031626Z-notebooks-a88c5b`. The fresh setup reused explicitly bootstrapped immutable caches, created a new Python environment and empty Qdrant volumes, and passed all 53 tests. Original course volumes were restored and readiness independently verified afterward. No remote is configured and no push/publication was performed.
 
 ## Scope update during implementation
 

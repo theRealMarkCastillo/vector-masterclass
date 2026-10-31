@@ -1,6 +1,6 @@
 # Lesson contracts
 
-Status: all lesson files are authored; final validation is tracked in [PROGRESS.md](PROGRESS.md). These contracts implement the [curriculum](CURRICULUM.md) and are delivered through the [implementation plan](IMPLEMENTATION_PLAN.md).
+Status: all 44 required lessons passed two complete offline runs; optional 27b passed separately. Validation and boundaries are recorded in [COVERAGE.md](COVERAGE.md). These contracts implement the [curriculum](CURRICULUM.md) and are delivered through the [implementation plan](IMPLEMENTATION_PLAN.md).
 
 ## Common execution contract
 

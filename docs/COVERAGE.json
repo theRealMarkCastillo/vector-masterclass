@@ -1,0 +1,824 @@
+{
+  "required_count": 44,
+  "optional_count": 1,
+  "tests_passed": 53,
+  "runs": {
+    "20261031T030745Z-notebooks-f4dedc": {
+      "lessons": [
+        {
+          "lesson": "00",
+          "profile": "T",
+          "seconds": 3.465025290992344,
+          "memory_upper_GiB": 0.6283453367650509,
+          "checks_passed": 8,
+          "manifest_sha256": "5a8d995cd2486a20872d2d14c4f7986d801c9d554e3a143fa1f7852c8d7aef9a",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/00/manifest.json"
+        },
+        {
+          "lesson": "01",
+          "profile": "T",
+          "seconds": 0.20377954200375825,
+          "memory_upper_GiB": 0.131439208984375,
+          "checks_passed": 8,
+          "manifest_sha256": "739186543f60896836a3b29eec13b66b18392937dff0a3b5ba24eb4d305d720d",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/01/manifest.json"
+        },
+        {
+          "lesson": "02",
+          "profile": "B",
+          "seconds": 2.9234047909994842,
+          "memory_upper_GiB": 0.538116455078125,
+          "checks_passed": 8,
+          "manifest_sha256": "5ae8506bd9e4e96f5ba1e40241f1228ee1759037216258793149dfb4e53f4a7b",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/02/manifest.json"
+        },
+        {
+          "lesson": "03",
+          "profile": "B",
+          "seconds": 3.027983125008177,
+          "memory_upper_GiB": 0.5693359375,
+          "checks_passed": 8,
+          "manifest_sha256": "31f79258ef2005664b348125a11dfe35de23d35a4eb78abfc7d2c9d44e21a454",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/03/manifest.json"
+        },
+        {
+          "lesson": "04",
+          "profile": "T",
+          "seconds": 0.1819537920091534,
+          "memory_upper_GiB": 0.1356048583984375,
+          "checks_passed": 8,
+          "manifest_sha256": "4842b28aa92063b909a5ff82723d4a5f678572c06f5eeaf9d232b4a97b12bc14",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/04/manifest.json"
+        },
+        {
+          "lesson": "05a",
+          "profile": "T",
+          "seconds": 0.5955016249936307,
+          "memory_upper_GiB": 0.25295837316662073,
+          "checks_passed": 8,
+          "manifest_sha256": "a5a9f81fee7cb1f6d058617d519281ffab90e63d433fa2a3550c1fe2146d02ed",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/05a/manifest.json"
+        },
+        {
+          "lesson": "05b",
+          "profile": "B",
+          "seconds": 1.6536365829961142,
+          "memory_upper_GiB": 0.3033312987536192,
+          "checks_passed": 7,
+          "manifest_sha256": "e10546bc46af6f05d088a9f06472d816635216638bb3b6c059086979ce09cd3b",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/05b/manifest.json"
+        },
+        {
+          "lesson": "06",
+          "profile": "B",
+          "seconds": 3.8986682499962626,
+          "memory_upper_GiB": 1.1015301505103707,
+          "checks_passed": 10,
+          "manifest_sha256": "2d584bf387d94d373f5f520c478a733cab1de90f1a4775c04bdc382c4ef202d8",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/06/manifest.json"
+        },
+        {
+          "lesson": "07",
+          "profile": "B",
+          "seconds": 3.2024366250116145,
+          "memory_upper_GiB": 0.5768280029296875,
+          "checks_passed": 8,
+          "manifest_sha256": "011380e61ca5b10dac3726fe1150a870a4d149d58d6cf703cc28a2a3f5167f3b",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/07/manifest.json"
+        },
+        {
+          "lesson": "08",
+          "profile": "B",
+          "seconds": 0.7197924170031911,
+          "memory_upper_GiB": 0.24982116650789976,
+          "checks_passed": 8,
+          "manifest_sha256": "072abdde73d53e06f9f3e745633381bbca27ac30986ea68410a85c88943d6af0",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/08/manifest.json"
+        },
+        {
+          "lesson": "09",
+          "profile": "B",
+          "seconds": 3.3721200410072925,
+          "memory_upper_GiB": 0.29000427201390266,
+          "checks_passed": 7,
+          "manifest_sha256": "e3f47be119bad9b9ffc471018c2e91255e6b3e3dca2a2942f74ec0d342145062",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/09/manifest.json"
+        },
+        {
+          "lesson": "10",
+          "profile": "B",
+          "seconds": 5.132981666989508,
+          "memory_upper_GiB": 1.1577301025390625,
+          "checks_passed": 9,
+          "manifest_sha256": "f8479886b492444aa10acf83f89192b27b0f773228f7d4b2d2c0343b948696a5",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/10/manifest.json"
+        },
+        {
+          "lesson": "11",
+          "profile": "B",
+          "seconds": 7.283161874991492,
+          "memory_upper_GiB": 1.2241046139970422,
+          "checks_passed": 8,
+          "manifest_sha256": "a71bd6e3882923f2293b9ac2d815131955aa16e08eb14d085f27d01b5ab40ec2",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/11/manifest.json"
+        },
+        {
+          "lesson": "12a",
+          "profile": "T",
+          "seconds": 3.0796187499945518,
+          "memory_upper_GiB": 0.6141815185546875,
+          "checks_passed": 9,
+          "manifest_sha256": "32a53b5514fb60703a1e406b5f462a949746787f80be057928cf510cec4347c9",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/12a/manifest.json"
+        },
+        {
+          "lesson": "12b",
+          "profile": "G",
+          "seconds": 28.715424166992307,
+          "memory_upper_GiB": 4.2890686029568315,
+          "checks_passed": 9,
+          "manifest_sha256": "730045bbd750647919289526343a276be14c356589d737e6904b4891946d4873",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/12b/manifest.json"
+        },
+        {
+          "lesson": "13a",
+          "profile": "G",
+          "seconds": 14.249278375005815,
+          "memory_upper_GiB": 3.859619140625,
+          "checks_passed": 8,
+          "manifest_sha256": "e72294bb1997f9fb24587c3c2132da597429254b2b08926bc3430422c1b62ada",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/13a/manifest.json"
+        },
+        {
+          "lesson": "13b",
+          "profile": "G",
+          "seconds": 11.265987708000466,
+          "memory_upper_GiB": 3.8601226806640625,
+          "checks_passed": 8,
+          "manifest_sha256": "2c87534f62425ccdb1c6e33a1e1b8df4ffcf4e3f31d0c8e40f736d87c8749181",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/13b/manifest.json"
+        },
+        {
+          "lesson": "13c",
+          "profile": "G",
+          "seconds": 17.675617291999515,
+          "memory_upper_GiB": 3.9148101806640625,
+          "checks_passed": 9,
+          "manifest_sha256": "133dcf8c81457f1f22286f36c43a633b05ae8fb8d5ab89ce04872b0096e95d8b",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/13c/manifest.json"
+        },
+        {
+          "lesson": "14",
+          "profile": "B",
+          "seconds": 3.8098125830001663,
+          "memory_upper_GiB": 0.6569592282176018,
+          "checks_passed": 8,
+          "manifest_sha256": "e0f6143f11bb17ea5933d20ae45af42586e9511a1b29ebd058cd720df335115c",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/14/manifest.json"
+        },
+        {
+          "lesson": "15",
+          "profile": "B",
+          "seconds": 3.030744666000828,
+          "memory_upper_GiB": 0.5407867431640625,
+          "checks_passed": 8,
+          "manifest_sha256": "aed3fff466d39407dcf4b767804d139d854304561ff6c4c92847c30d9af57747",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/15/manifest.json"
+        },
+        {
+          "lesson": "16a",
+          "profile": "B",
+          "seconds": 3.792259958005161,
+          "memory_upper_GiB": 0.6527972407639027,
+          "checks_passed": 9,
+          "manifest_sha256": "69a56b609cac2a5d14b0a1d7f95f0f4973190807f92959faf4281f8df4addb10",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/16a/manifest.json"
+        },
+        {
+          "lesson": "16b",
+          "profile": "B",
+          "seconds": 3.0208932910027215,
+          "memory_upper_GiB": 0.5389404296875,
+          "checks_passed": 8,
+          "manifest_sha256": "c393ba6d73fd5dbc5cfdcf793952a03e8cc8794db02b66090652aa0c85acecb8",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/16b/manifest.json"
+        },
+        {
+          "lesson": "17",
+          "profile": "B",
+          "seconds": 3.9249970840028254,
+          "memory_upper_GiB": 1.0833441158756614,
+          "checks_passed": 11,
+          "manifest_sha256": "1ab18682cc4bbfae5f92011a26086f7fed4156e9fed4ad002f5ffeb364ff13b6",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/17/manifest.json"
+        },
+        {
+          "lesson": "18a",
+          "profile": "B",
+          "seconds": 2.9553021249885205,
+          "memory_upper_GiB": 0.5395050048828125,
+          "checks_passed": 8,
+          "manifest_sha256": "7ca5e12ffe8cd540094bd077e360fb76e6b2af2451f6ef8028b86979b77e610b",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/18a/manifest.json"
+        },
+        {
+          "lesson": "18b",
+          "profile": "B",
+          "seconds": 3.355203792001703,
+          "memory_upper_GiB": 0.559112548828125,
+          "checks_passed": 8,
+          "manifest_sha256": "6bb98591db7b540640ee46343625562a6a1b0b513921b711e95fc8f13df10e7a",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/18b/manifest.json"
+        },
+        {
+          "lesson": "18c",
+          "profile": "B",
+          "seconds": 2.9632593340065796,
+          "memory_upper_GiB": 0.5442047119140625,
+          "checks_passed": 9,
+          "manifest_sha256": "97a4eeee020b7e1df1f00b5ede8fa78d5de610f525aaf8af4e968b5396b8e356",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/18c/manifest.json"
+        },
+        {
+          "lesson": "19a",
+          "profile": "B",
+          "seconds": 4.6582000000053085,
+          "memory_upper_GiB": 1.1269458001479506,
+          "checks_passed": 8,
+          "manifest_sha256": "a86b990c329384a62e288ca9add9e1be0b5b21b53df3b57093524a14d79b1f96",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/19a/manifest.json"
+        },
+        {
+          "lesson": "19b",
+          "profile": "B",
+          "seconds": 3.0198732090066187,
+          "memory_upper_GiB": 0.56195068359375,
+          "checks_passed": 8,
+          "manifest_sha256": "5af3a2fddc64431c8d2d3266f1a332b619ce7f10f38d4b4038e52dedb3537b2b",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/19b/manifest.json"
+        },
+        {
+          "lesson": "19c",
+          "profile": "B",
+          "seconds": 3.933024750003824,
+          "memory_upper_GiB": 1.1423864737153053,
+          "checks_passed": 9,
+          "manifest_sha256": "28102d73e0577f116f1bd46e20d84667323dc66fe1121ff22a257e0d935c1676",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/19c/manifest.json"
+        },
+        {
+          "lesson": "20a",
+          "profile": "B",
+          "seconds": 11.274079291004455,
+          "memory_upper_GiB": 1.7944488525390625,
+          "checks_passed": 8,
+          "manifest_sha256": "b60ec29e36e69e01b624f35fb9974681f8e17ddac2baca0fe113124e53ce89dc",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/20a/manifest.json"
+        },
+        {
+          "lesson": "20b",
+          "profile": "B",
+          "seconds": 6.686641417007195,
+          "memory_upper_GiB": 0.8924316400662065,
+          "checks_passed": 9,
+          "manifest_sha256": "31196d7288c6fcfdba6cc5c4a00978b35a518d5cf6f06239a9d17b3c1acfe8f6",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/20b/manifest.json"
+        },
+        {
+          "lesson": "20c",
+          "profile": "B",
+          "seconds": 3.22887891701248,
+          "memory_upper_GiB": 0.3510589599609375,
+          "checks_passed": 9,
+          "manifest_sha256": "6a4ae7f43fc0518259bf114ffdf96996b79a0ec56805b4e89acc210a37315010",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/20c/manifest.json"
+        },
+        {
+          "lesson": "21",
+          "profile": "B",
+          "seconds": 4.9461927079973975,
+          "memory_upper_GiB": 1.8854840081185102,
+          "checks_passed": 9,
+          "manifest_sha256": "0d2288db69818225bcf59e09b3be8abcc5ab327320b39efc19adbb54afa02223",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/21/manifest.json"
+        },
+        {
+          "lesson": "22",
+          "profile": "B",
+          "seconds": 4.263347833009902,
+          "memory_upper_GiB": 0.8180468743667006,
+          "checks_passed": 9,
+          "manifest_sha256": "c5e602a241cce559ac2c1567735bc94089e470bd560d516ab12000aaf1d91a27",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/22/manifest.json"
+        },
+        {
+          "lesson": "23a",
+          "profile": "O",
+          "seconds": 3.7930323330074316,
+          "memory_upper_GiB": 1.228646240197122,
+          "checks_passed": 9,
+          "manifest_sha256": "19fd4f9e3dac34fa3f91c393c07464de32bd4858b3462d2c2c415cd360516b1d",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/23a/manifest.json"
+        },
+        {
+          "lesson": "23b",
+          "profile": "O",
+          "seconds": 6.807456957991235,
+          "memory_upper_GiB": 3.9674908444285393,
+          "checks_passed": 9,
+          "manifest_sha256": "450d6cadb42b49e719e046e29c522c83e352fcd9039b2afbe1e4489cd550ac3f",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/23b/manifest.json"
+        },
+        {
+          "lesson": "23c",
+          "profile": "O",
+          "seconds": 4.297439916001167,
+          "memory_upper_GiB": 0.7570697013288736,
+          "checks_passed": 8,
+          "manifest_sha256": "a350c614e1de1c16c93edfa0b2a471801a1786560198305765ddc0ba81368329",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/23c/manifest.json"
+        },
+        {
+          "lesson": "23d",
+          "profile": "G",
+          "seconds": 20.183448458003113,
+          "memory_upper_GiB": 5.024501342326403,
+          "checks_passed": 9,
+          "manifest_sha256": "1ef41360e951339032c4a255eb9d94a8383ebdf82470ad03dbe60480a68258f1",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/23d/manifest.json"
+        },
+        {
+          "lesson": "24",
+          "profile": "B",
+          "seconds": 5.197856250000768,
+          "memory_upper_GiB": 1.1248852536082268,
+          "checks_passed": 8,
+          "manifest_sha256": "c1739d70a8ca43d911239c7d9840b77a20a57c0af31c09122e532f4d8526f6fa",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/24/manifest.json"
+        },
+        {
+          "lesson": "25",
+          "profile": "B",
+          "seconds": 4.209673292003572,
+          "memory_upper_GiB": 0.664092406630516,
+          "checks_passed": 11,
+          "manifest_sha256": "5ce5b3cc7369cbec0d05ed85ab79b4eae19c699ba174448792232c4d4484f673",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/25/manifest.json"
+        },
+        {
+          "lesson": "26",
+          "profile": "O",
+          "seconds": 6.252041290994384,
+          "memory_upper_GiB": 0.6746398918330669,
+          "checks_passed": 11,
+          "manifest_sha256": "cae0a9f94c6ac0f8b78ce387120ecdc004f76bab22ec49ad84de72f07786892b",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/26/manifest.json"
+        },
+        {
+          "lesson": "27a",
+          "profile": "B",
+          "seconds": 4.003257999997004,
+          "memory_upper_GiB": 0.6705822749063373,
+          "checks_passed": 13,
+          "manifest_sha256": "2584a59a788d408fcc55953f6723c1a2675daa91e378c465c0104f51c8c8620d",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/27a/manifest.json"
+        },
+        {
+          "lesson": "28",
+          "profile": "G",
+          "seconds": 7.898529625002993,
+          "memory_upper_GiB": 4.186175536364317,
+          "checks_passed": 9,
+          "manifest_sha256": "3e8a4bac43c843f34ab539f66e75b70e9c8d28d86b3860fc2eb07187ac4707ed",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/28/manifest.json"
+        },
+        {
+          "lesson": "29",
+          "profile": "O",
+          "seconds": 0.45540162500401493,
+          "memory_upper_GiB": 0.1420135498046875,
+          "checks_passed": 9,
+          "manifest_sha256": "4088afd66a919e92929d6d9c53a870d553b40cf81b7e9e80d261365f32a6ea0b",
+          "path": "artifacts/20261031T030745Z-notebooks-f4dedc/29/manifest.json"
+        }
+      ],
+      "total_measured_experiment_seconds": 242.60722062205605,
+      "largest_conservative_memory_GiB": 5.024501342326403,
+      "summary_sha256": "4cb5aab53a1f1c6f85df88e8ef3cefd7e376ab13fdd23280407b90177f73f181",
+      "capstone_bundle_sha256": "c0b08b5c8c91092a847afa1673f1024e944d5fdfe403f3d5db30e613b6033807"
+    },
+    "20261031T031626Z-notebooks-a88c5b": {
+      "lessons": [
+        {
+          "lesson": "00",
+          "profile": "T",
+          "seconds": 3.646740125012002,
+          "memory_upper_GiB": 0.67584228515625,
+          "checks_passed": 8,
+          "manifest_sha256": "3d9a2bacb497035e795009dd358b4129b5be34e5ec0bf6e6ec85f7efbca6cc3e",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/00/manifest.json"
+        },
+        {
+          "lesson": "01",
+          "profile": "T",
+          "seconds": 0.21860345799359493,
+          "memory_upper_GiB": 0.132904052734375,
+          "checks_passed": 8,
+          "manifest_sha256": "125e479a06dde8e45d6922a7c77c3abb1c7bdebb3c5ea447e9bec1f7f72a6d34",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/01/manifest.json"
+        },
+        {
+          "lesson": "02",
+          "profile": "B",
+          "seconds": 3.0575132919911994,
+          "memory_upper_GiB": 0.53936767578125,
+          "checks_passed": 8,
+          "manifest_sha256": "17855a64ac2ec76ac2350cefb258da91306387a2e524819e793a1869cc7d5a20",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/02/manifest.json"
+        },
+        {
+          "lesson": "03",
+          "profile": "B",
+          "seconds": 3.1182010829943465,
+          "memory_upper_GiB": 0.5753173828125,
+          "checks_passed": 8,
+          "manifest_sha256": "4509671ce098064471b75df7b59bbf0a2f53ef7eca89be74a4ac2490d82d9511",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/03/manifest.json"
+        },
+        {
+          "lesson": "04",
+          "profile": "T",
+          "seconds": 0.18093241599854082,
+          "memory_upper_GiB": 0.1352081298828125,
+          "checks_passed": 8,
+          "manifest_sha256": "441998f69f0fe168ca53b189d14641bd090a51f7337a82e9fb523e442c241fc8",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/04/manifest.json"
+        },
+        {
+          "lesson": "05a",
+          "profile": "T",
+          "seconds": 0.5955673330026912,
+          "memory_upper_GiB": 0.23812255822122097,
+          "checks_passed": 8,
+          "manifest_sha256": "39b2f6dcf48c16ee888cd09cff235a2515c79ef7db1e78d4235d45125441a9cf",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/05a/manifest.json"
+        },
+        {
+          "lesson": "05b",
+          "profile": "B",
+          "seconds": 1.655217833002098,
+          "memory_upper_GiB": 0.3040313720703125,
+          "checks_passed": 7,
+          "manifest_sha256": "71973f9876e123ea21cd871034c6a3b3f026b7cdd339f5bdbd6dc342394a8a7f",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/05b/manifest.json"
+        },
+        {
+          "lesson": "06",
+          "profile": "B",
+          "seconds": 4.1715179170132615,
+          "memory_upper_GiB": 1.1052093505859375,
+          "checks_passed": 10,
+          "manifest_sha256": "53668892a4eca4c05d548d889612c2029ec47acd4307f1eb241e9d5e3cddadd0",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/06/manifest.json"
+        },
+        {
+          "lesson": "07",
+          "profile": "B",
+          "seconds": 3.3083405420038616,
+          "memory_upper_GiB": 0.571014404296875,
+          "checks_passed": 8,
+          "manifest_sha256": "c1aae61639c2d74848105dce44c21c20e9031859bd042559fb21485c16ca56af",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/07/manifest.json"
+        },
+        {
+          "lesson": "08",
+          "profile": "B",
+          "seconds": 0.9789169159921585,
+          "memory_upper_GiB": 0.25100646913051605,
+          "checks_passed": 8,
+          "manifest_sha256": "8e752db6346ba95535ef7b269a575947b1df29685243e60bdc6a2ac307e0adb1",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/08/manifest.json"
+        },
+        {
+          "lesson": "09",
+          "profile": "B",
+          "seconds": 3.795396500005154,
+          "memory_upper_GiB": 0.29684875439852476,
+          "checks_passed": 7,
+          "manifest_sha256": "3c30a6e8e6f6df2a0f1c7e7266c0d9db1df28d30884fb376ac5d90bd267b91a6",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/09/manifest.json"
+        },
+        {
+          "lesson": "10",
+          "profile": "B",
+          "seconds": 5.370233334004297,
+          "memory_upper_GiB": 1.144844970665872,
+          "checks_passed": 9,
+          "manifest_sha256": "e3ad17165e6baddf83b9babd6b04d212ce16651c646b9eb2a22c68ed3a82a0e6",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/10/manifest.json"
+        },
+        {
+          "lesson": "11",
+          "profile": "B",
+          "seconds": 7.378127707997919,
+          "memory_upper_GiB": 1.2134478753432631,
+          "checks_passed": 8,
+          "manifest_sha256": "870aa2f46e65280d56e340a0d2ff8ef69bd82058ec5d3a77ebbdbc8b3ff926ae",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/11/manifest.json"
+        },
+        {
+          "lesson": "12a",
+          "profile": "T",
+          "seconds": 3.234515583011671,
+          "memory_upper_GiB": 0.6211700439453125,
+          "checks_passed": 9,
+          "manifest_sha256": "36d24f7986dc9225f766d0297390c302f9d424b2717ef4f49d75a7ddb3e02b49",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/12a/manifest.json"
+        },
+        {
+          "lesson": "12b",
+          "profile": "G",
+          "seconds": 28.994396416994277,
+          "memory_upper_GiB": 4.26959228515625,
+          "checks_passed": 9,
+          "manifest_sha256": "dfbcb418019de9d113fe1f8f03657c741a7b042712ee4cf84d53c05d3c297681",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/12b/manifest.json"
+        },
+        {
+          "lesson": "13a",
+          "profile": "G",
+          "seconds": 14.227206416995614,
+          "memory_upper_GiB": 3.856781005859375,
+          "checks_passed": 8,
+          "manifest_sha256": "ade08ed401666d6bd2ab4127dd9b58260ee3442da1002439d89da2d5ad7bb1e8",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/13a/manifest.json"
+        },
+        {
+          "lesson": "13b",
+          "profile": "G",
+          "seconds": 11.234271041001193,
+          "memory_upper_GiB": 3.861236572265625,
+          "checks_passed": 8,
+          "manifest_sha256": "dc5424c7a1ed431c410e6936a294890ddad97329b51baef972f614b1861b9ec3",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/13b/manifest.json"
+        },
+        {
+          "lesson": "13c",
+          "profile": "G",
+          "seconds": 17.665604167006677,
+          "memory_upper_GiB": 3.9166107177734375,
+          "checks_passed": 9,
+          "manifest_sha256": "bfa2eafa35311fa29327e3dfefcb64e0a302d0f5f979068a942202f5d5a20d03",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/13c/manifest.json"
+        },
+        {
+          "lesson": "14",
+          "profile": "B",
+          "seconds": 3.836637625005096,
+          "memory_upper_GiB": 0.6547125242650509,
+          "checks_passed": 8,
+          "manifest_sha256": "de719f1599ce905b584a56780d7935af7ae2190b06a3da9ece290f8ff960a8e4",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/14/manifest.json"
+        },
+        {
+          "lesson": "15",
+          "profile": "B",
+          "seconds": 3.124605500008329,
+          "memory_upper_GiB": 0.5461273193359375,
+          "checks_passed": 8,
+          "manifest_sha256": "3d46e17b11acf3e9d1844b480c1cfb7c10875e56fbae90fd68ddc2a399de9cbd",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/15/manifest.json"
+        },
+        {
+          "lesson": "16a",
+          "profile": "B",
+          "seconds": 3.924111582993646,
+          "memory_upper_GiB": 0.6520263664424419,
+          "checks_passed": 9,
+          "manifest_sha256": "9461c70e292d913693c7bc3575489d1a1e8326c6d92134466964911193dd0050",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/16a/manifest.json"
+        },
+        {
+          "lesson": "16b",
+          "profile": "B",
+          "seconds": 3.129393750001327,
+          "memory_upper_GiB": 0.5418701171875,
+          "checks_passed": 8,
+          "manifest_sha256": "2cd410669918a876d8b870b74d44cd3adf2ab5e88093f9de4358e6b87640b9dc",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/16b/manifest.json"
+        },
+        {
+          "lesson": "17",
+          "profile": "B",
+          "seconds": 3.976941999993869,
+          "memory_upper_GiB": 1.0810961909592152,
+          "checks_passed": 11,
+          "manifest_sha256": "2783e179b8b4e0456cbd80b9d922189136daf5a190a3394bb52fec5fbe26779c",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/17/manifest.json"
+        },
+        {
+          "lesson": "18a",
+          "profile": "B",
+          "seconds": 3.066431333005312,
+          "memory_upper_GiB": 0.542724609375,
+          "checks_passed": 8,
+          "manifest_sha256": "4fae6929e6661dff0c37cff27fb31f031681a8b892a9a2740f78cba793f21c73",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/18a/manifest.json"
+        },
+        {
+          "lesson": "18b",
+          "profile": "B",
+          "seconds": 6.637676874990575,
+          "memory_upper_GiB": 0.564788818359375,
+          "checks_passed": 8,
+          "manifest_sha256": "83d09c2e0760f5b7877be195525de2eb952c268f09be58d9f241a5cd9ce9a7dc",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/18b/manifest.json"
+        },
+        {
+          "lesson": "18c",
+          "profile": "B",
+          "seconds": 2.993394791992614,
+          "memory_upper_GiB": 0.544708251953125,
+          "checks_passed": 9,
+          "manifest_sha256": "3ab72723db6a4973f8265185c7c8f6ac91fd1eccf61f7f0e3e5f6e795eb319ea",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/18c/manifest.json"
+        },
+        {
+          "lesson": "19a",
+          "profile": "B",
+          "seconds": 4.635878707995289,
+          "memory_upper_GiB": 1.1267938232049346,
+          "checks_passed": 8,
+          "manifest_sha256": "905f9eeede7fd9a49fb0e66bd19ccd00a6a1f054bf7125a7c0c510a20edc1183",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/19a/manifest.json"
+        },
+        {
+          "lesson": "19b",
+          "profile": "B",
+          "seconds": 3.0917359579907497,
+          "memory_upper_GiB": 0.5585479736328125,
+          "checks_passed": 8,
+          "manifest_sha256": "f9bb436d3e74c8033b6544a2daed85d0dda472302cea2df4ef6dd0ea7b0ffede",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/19b/manifest.json"
+        },
+        {
+          "lesson": "19c",
+          "profile": "B",
+          "seconds": 4.931064125004923,
+          "memory_upper_GiB": 1.1386944577097893,
+          "checks_passed": 9,
+          "manifest_sha256": "6e5ef092de3cccb98897e2f1eae2bc24364bae9a0ef3404d528e45df697b22cd",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/19c/manifest.json"
+        },
+        {
+          "lesson": "20a",
+          "profile": "B",
+          "seconds": 11.327541624996229,
+          "memory_upper_GiB": 1.795928955078125,
+          "checks_passed": 8,
+          "manifest_sha256": "e616e2db68523b3981b719582d9d58f9b17f1935e065c36c5bce3fb2988a80de",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/20a/manifest.json"
+        },
+        {
+          "lesson": "20b",
+          "profile": "B",
+          "seconds": 6.832975917001022,
+          "memory_upper_GiB": 0.9170379638671875,
+          "checks_passed": 9,
+          "manifest_sha256": "a01feb811472f900aec618f479354b90f4893e1fd44d63a740483dd385d8eaf6",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/20b/manifest.json"
+        },
+        {
+          "lesson": "20c",
+          "profile": "B",
+          "seconds": 3.595531375001883,
+          "memory_upper_GiB": 0.3489807127043605,
+          "checks_passed": 9,
+          "manifest_sha256": "9bc1a0d5a2fd1a15ecd9abe78ee14f26a4fe4ae9d4b55d8480cff98b61d1533d",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/20c/manifest.json"
+        },
+        {
+          "lesson": "21",
+          "profile": "B",
+          "seconds": 4.987824541996815,
+          "memory_upper_GiB": 1.9890850828960538,
+          "checks_passed": 9,
+          "manifest_sha256": "e35f650ecd75be0bd429f6ef86e3becb617d261798a11f4f68beeb38e940293d",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/21/manifest.json"
+        },
+        {
+          "lesson": "22",
+          "profile": "B",
+          "seconds": 4.268520666999393,
+          "memory_upper_GiB": 0.8226116942241788,
+          "checks_passed": 9,
+          "manifest_sha256": "ab62a8c88ed63e22817c601e6719f58001873fd07992c37fe97b53a3de50c119",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/22/manifest.json"
+        },
+        {
+          "lesson": "23a",
+          "profile": "O",
+          "seconds": 3.9466445830039447,
+          "memory_upper_GiB": 1.2266662595793605,
+          "checks_passed": 9,
+          "manifest_sha256": "448ccddda2ee1aa5b97760c6ae870b0a679043e4501e01f50afe21c5bb7ceabe",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/23a/manifest.json"
+        },
+        {
+          "lesson": "23b",
+          "profile": "O",
+          "seconds": 7.279959833002067,
+          "memory_upper_GiB": 3.9639123529195786,
+          "checks_passed": 9,
+          "manifest_sha256": "e6a7fd7bdb3b98a481d72fac9707d4aea5ddbda8095b904270eb742fbe7e22d6",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/23b/manifest.json"
+        },
+        {
+          "lesson": "23c",
+          "profile": "O",
+          "seconds": 4.304649666999467,
+          "memory_upper_GiB": 0.7258068844676018,
+          "checks_passed": 8,
+          "manifest_sha256": "0ecdff1e2fdeede45e7a25214041fe14366b118c61664bd56c78e1d7064875f6",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/23c/manifest.json"
+        },
+        {
+          "lesson": "23d",
+          "profile": "G",
+          "seconds": 20.121256250000442,
+          "memory_upper_GiB": 5.027857665903866,
+          "checks_passed": 9,
+          "manifest_sha256": "435862b9c5f06dc86d62185926c48ea3cdd679f15b979d0dabb2656dd5425d15",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/23d/manifest.json"
+        },
+        {
+          "lesson": "24",
+          "profile": "B",
+          "seconds": 5.451992541988147,
+          "memory_upper_GiB": 1.1336840819567442,
+          "checks_passed": 8,
+          "manifest_sha256": "6319ed40303d15de772bf9841d53e9a514691b58a38d5636cc66c170e8f98478",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/24/manifest.json"
+        },
+        {
+          "lesson": "25",
+          "profile": "B",
+          "seconds": 4.32549062500766,
+          "memory_upper_GiB": 0.6627874746918678,
+          "checks_passed": 11,
+          "manifest_sha256": "05afb5dfda094ecc5e7897695caaa6223735210dc36be2f5c666a47b867d19d5",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/25/manifest.json"
+        },
+        {
+          "lesson": "26",
+          "profile": "O",
+          "seconds": 6.074127708998276,
+          "memory_upper_GiB": 0.672084960155189,
+          "checks_passed": 11,
+          "manifest_sha256": "d4e93dc19376cc01ec0297d698cf3876385704cd56920b15bf47a4540fd3cbb3",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/26/manifest.json"
+        },
+        {
+          "lesson": "27a",
+          "profile": "B",
+          "seconds": 4.326090667003882,
+          "memory_upper_GiB": 0.6712420647963881,
+          "checks_passed": 13,
+          "manifest_sha256": "9fab3270a4952854fa9dada395a492619a0d68c166146c5a32f0c2e46b1fcfb3",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/27a/manifest.json"
+        },
+        {
+          "lesson": "28",
+          "profile": "G",
+          "seconds": 7.919625542010181,
+          "memory_upper_GiB": 4.191492919810116,
+          "checks_passed": 9,
+          "manifest_sha256": "582d1ce3834c7570b88ad99dea3b5df0a7c37f7e5135e042619c1f9e9ca0ba15",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/28/manifest.json"
+        },
+        {
+          "lesson": "29",
+          "profile": "O",
+          "seconds": 0.45855008299986366,
+          "memory_upper_GiB": 0.14202880859375,
+          "checks_passed": 9,
+          "manifest_sha256": "bdfc42edcc0a602fe431364e1ca69a167c1bb096cd1abaee8dfeefb9455c6c0f",
+          "path": "artifacts/20261031T031626Z-notebooks-a88c5b/29/manifest.json"
+        }
+      ],
+      "total_measured_experiment_seconds": 251.39995595801156,
+      "largest_conservative_memory_GiB": 5.027857665903866,
+      "summary_sha256": "4cb5aab53a1f1c6f85df88e8ef3cefd7e376ab13fdd23280407b90177f73f181",
+      "capstone_bundle_sha256": "e9913a38090cd0633b88f69c391ad83e40ad2db48e1eea461c391396f234909e"
+    }
+  },
+  "frozen_benchmark_metrics_identical": true,
+  "model_integrity_sha256": "ba54997e0a857618bbcba2cec8017469683d1d7032564a372a99b6ce778759b8",
+  "visual_review_sha256": "7eb3947aeeb84dea34be4ca2a9312cc1bfffe969df38330c6b0b1e39f950840c",
+  "fresh_setup_report": "artifacts/20261031t031436z-fresh-setup.json",
+  "fresh_setup_report_sha256": "967cd5f2be2fbee97935cab0fd85f4f9c66c0ef72b9e89331b7998fecad89ce4",
+  "optional_cluster_manifest": "artifacts/20261031T025741Z-notebooks-6bda38/27b/manifest.json",
+  "optional_cluster_manifest_sha256": "d7e11aa3c89c0e7b5fd493b2f8ea5b172969fe96052026250aaf8ceb40e4d412",
+  "fresh_export_review": "artifacts/20261031T031626Z-notebooks-a88c5b/fresh-export-review.json",
+  "fresh_export_review_sha256": "fa94bae1045f0eb8764a0316ba9d927a8f0d81ded7014d62294ecd9cf7a5192c"
+}
