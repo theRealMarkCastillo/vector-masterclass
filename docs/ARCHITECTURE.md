@@ -43,6 +43,26 @@ The source journal and current policy are authoritative. Qdrant is a derived ret
 
 The reference SciFact comparison includes a reranker regression. Tiny routing fixtures can yield zero accepted requests at a conservative development threshold. Full context can still produce contradictory reset advice, false abstention, or incorrect citations. These are reasons to calibrate product-specific acceptance criteria rather than assume newer techniques improve quality. See `RETRIEVAL_RESULTS.md`, `RAG_RESULTS.md`, and `ADVANCED_RESULTS.md`.
 
+## Index families and system alternatives
+
+An exact flat scan evaluates all eligible vectors, with work proportional to corpus size times dimensions. It has no ANN candidate omissions and makes a useful reference; small corpora or highly selective filters can make it the simplest serving choice too. HNSW instead navigates a multilayer proximity graph. Graph connectivity and construction effort affect memory/build cost; query effort affects fidelity/latency. Filter cardinality and planner choices complicate that tradeoff, as lesson 09 demonstrates.
+
+An inverted-file index (IVF) partitions vectors around learned coarse centroids and scans selected lists; increasing probed lists trades speed for recall. Product quantization (PQ) divides vectors into subspaces and stores codebook indices, approximating distances through compact codes. IVF can narrow candidates while PQ compresses them, but both need representative training data, and distribution changes can require retraining/rebuilding. The course's INT8 scalar quantization is a different representation: it quantizes coordinates independently rather than selecting subvector codewords. These IVF/PQ algorithms are conceptual alternatives here, not APIs executed by the pinned Qdrant labs. [Faiss index reference](https://github.com/facebookresearch/faiss/wiki/Faiss-indexes).
+
+Disk-oriented ANN systems such as DiskANN design graph search around SSD access and memory constraints. Merely setting an existing index's `on_disk` option does not reproduce that algorithm or its benchmark results. Evaluate I/O, cache residency, storage latency, write/update behavior, and degraded capacity on the actual workload. [Original DiskANN research](https://www.microsoft.com/en-us/research/publication/diskann-fast-accurate-billion-point-nearest-neighbor-search-on-a-single-node/).
+
+| System choice | When to evaluate it | Responsibility that remains |
+| --- | --- | --- |
+| In-process NumPy/Faiss index | Embedded/offline retrieval, transparent algorithm experiments, application-owned lifecycle | Build persistence, identity/filtering, concurrency, updates, backups, and serving around the library as needed. |
+| PostgreSQL with pgvector | Relational joins and transactional source data dominate; one operational database may simplify consistency | Measure index/filter plans, contention, capacity, and migration on the real workload. [pgvector reference](https://github.com/pgvector/pgvector). |
+| Search engine with vector support | Existing lexical search, analyzers, and document-search operations are central | Evaluate hybrid scoring, vector/filter execution, index lifecycle, and operational cost together. [Elasticsearch kNN reference](https://www.elastic.co/docs/solutions/search/vector/knn). |
+| Dedicated vector service such as this Qdrant setup | Vector/payload retrieval needs an independent lifecycle or serving boundary | Keep source/policy authority, change propagation, representation contracts, and recovery consistent across stores. |
+| SQL or ordinary key lookup | The question is an exact identifier, aggregation, relationship, or transactional fact | Define a trustworthy structured query and authorization contract; embeddings may add no value. |
+
+These are selection criteria, not comparative performance results. The course implements Qdrant and NumPy/lexical baselines, not a benchmark of competing vendors. Managed versus self-hosted deployment additionally changes staffing, backup/control-plane ownership, network latency, data residency, and cost; measure the product's requirements before choosing.
+
+Representation adaptation is another independent choice. A contrastive objective raises a query-positive score relative to negatives; a common softmax loss is `-log(exp(sim(q,p)/T) / sum_j exp(sim(q,d_j)/T))`. Temperature changes score concentration. In-batch negatives provide economical comparisons but may include relevant documents; hard negatives sharpen distinctions and can amplify false-negative labels. Distillation transfers a stronger teacher's ranking distribution and its errors. Fine-tuning needs source-family/time-aware splits, a new model contract, regression slices, and a complete re-embedding/migration plan. The course runs trained models and explains these mechanics; it does not claim to train a frontier embedding model.
+
 ## Serving and access
 
 The local API accepts a query and retrieval mode, never a caller-supplied tenant or arbitrary filter. Known demonstration tokens resolve to server-owned identities. Current authorized document revisions constrain every dense, sparse, and hybrid branch. Returned text must match canonical spans. Cache keys include identity, tenant, policy/source epoch, representation, collection, and query. Policy is checked around work and before responding.

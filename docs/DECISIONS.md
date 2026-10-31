@@ -45,8 +45,14 @@ The fictional corpus contains 25 immutable source revisions and fourteen queries
 
 The external benchmark is BEIR SciFact: full 5,183-document corpus, with the first twenty numeric query IDs from train for development and first twenty from test for evaluation. Selection was fixed before model scoring. Its CC-BY-SA-4.0 attribution and judgment limitations are in `datasets/README.md`; exact source/file hashes are in `configs/benchmark.json`. The original archive download was slow but completed; no alternate dataset was substituted.
 
+## Advanced model and algorithm boundaries
+
+The full course adds pinned multilingual MiniLM, CLIP, mxbai-embed-large-v1, and Answer.AI ColBERT-small snapshots, all with explicit configuration and bootstrap manifests. They use the existing locked native PyTorch/Transformers environment; no extra CUDA extensions or remote model code are required. ColBERT uses a transparent local adapter for the checkpoint's marker/mask/punctuation/projection contract and verifies real Qdrant MaxSim against NumPy.
+
+Visual documents use live CLIP whole-page/crop baselines and canonical author text; they do not run a trained ColPali encoder. Graph retrieval uses author-curated provenance-backed relations and real generation, not LLM graph extraction or community-summary reproduction. Multi-vector compression uses a deliberately lossy mean/projection candidate baseline, not MUVERA. These choices satisfy bounded live analysis contracts while keeping algorithm/research limits explicit. Full-context comparisons use the same 2,048-token-limited Qwen generator. See ADVANCED_RESULTS.md for inspected failures.
+
 ## Evidence interpretation and next gates
 
-M0 feasibility does not satisfy M1–M7. Each lesson still needs a real experiment, exercise/solution, fresh execution, result artifact, and visual review. M1's metric fixtures already cover document deduplication, graded ranking, no-answer exclusion, overlapping evidence spans, alternative evidence, immutable revision hashes, and explicit ties. Later stages add integration, serving, lifecycle, generation, and application checks.
+M0 feasibility alone does not satisfy M1–M7. Each lesson needs a real experiment, exercise/solution, fresh execution, result artifact, and visual review. The current milestone state is in PROGRESS.md. Metric fixtures cover document deduplication, graded ranking, no-answer exclusion, overlapping evidence spans, alternative evidence, immutable revision hashes, and explicit ties; later checks cover integration, serving, lifecycle, generation, and applications.
 
 The pilot resource targets remain conservative authoring limits. Model and process measurements from a large-memory Mac do not establish behavior under actual 16 GiB host pressure. Advanced model downloads and multi-node runs require separately recorded budgets.

@@ -1,8 +1,8 @@
 # Vector Storage Masterclass: curriculum and implementation blueprint
 
-Design date: October 30, 2026. Revision: 3, incorporating the design review and the macOS-only CPU/MPS scope update. Status: ready for phased implementation planning; no runtime or performance claims have been validated in this workspace.
+Design date: October 30, 2026. Revision: 3, incorporating the design review and the macOS-only CPU/MPS scope update. Implementation now includes all 45 lesson files; observed completion and final validation are tracked in [PROGRESS.md](PROGRESS.md). This document preserves the design's proposed defaults and teaching estimates; measured choices are in [DECISIONS.md](DECISIONS.md).
 
-The [lesson contracts](LESSON_CONTRACTS.md) define executable lesson boundaries and completion evidence. The [implementation plan](IMPLEMENTATION_PLAN.md) defines delivery order, dependencies, and verification gates. Model choices, compatible dependency versions, and resource limits are finalized by the first Apple Silicon pilot, not assumed validated by this design.
+The [lesson contracts](LESSON_CONTRACTS.md) define executable lesson boundaries and completion evidence. The [implementation plan](IMPLEMENTATION_PLAN.md) defines delivery order, dependencies, and verification gates. The [architecture guide](ARCHITECTURE.md) supplies the worked design defense and conceptual alternatives not implemented by the Qdrant labs.
 
 ## Outcome and scope
 
