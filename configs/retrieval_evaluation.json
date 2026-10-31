@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "benchmark": "BEIR SciFact",
+  "corpus": "all 5183 supplied documents",
+  "query_selection": "first 20 numeric IDs in each official train/test qrels split; selected before model scoring",
+  "development_split": "train",
+  "held_out_split": "test",
+  "k": 10,
+  "candidate_k": 40,
+  "fusion_constant": 60,
+  "methods": ["BM25", "dense exact", "dense+BM25 RRF60", "RRF60+cross-encoder"],
+  "dense_input": "title plus full abstract; pinned tokenizer truncates at 256 tokens",
+  "reranker_input": "query and title plus full abstract; pinned pair limit 512 tokens",
+  "selection_policy": "No parameter tuning from test scores. Further tuning needs a new untouched holdout or explicit reused-test labeling."
+}

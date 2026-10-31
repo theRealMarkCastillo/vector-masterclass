@@ -1,0 +1,52 @@
+{
+  "provenance": "Author-created fictional task fixtures. These are instructional labels, separate from the human-approved course relevance gold. No real customer behavior or personal data.",
+  "license": "CC0-1.0",
+  "recommendation": {
+    "cutoff": "2026-06-01",
+    "catalog": [
+      {"id":"router","text":"Portable wireless travel router for Wi-Fi internet access","family":"network","published":"2026-01-01","compatible":["travel"]},
+      {"id":"router-case","text":"Protective carrying case for a portable wireless travel router","family":"case","published":"2026-01-01","compatible":["travel"]},
+      {"id":"power-bank","text":"USB power bank battery for travel routers and mobile devices","family":"power","published":"2026-01-01","compatible":["travel"]},
+      {"id":"usb-cable","text":"Short USB power cable for a portable travel router","family":"power","published":"2026-01-01","compatible":["travel"]},
+      {"id":"switch","text":"Rack mounted network switch for an office equipment cabinet","family":"network","published":"2026-01-01","compatible":["office"]},
+      {"id":"rack-kit","text":"Rack mounting brackets for an office network switch","family":"mount","published":"2026-01-01","compatible":["office"]},
+      {"id":"ethernet","text":"Ethernet patch cables for connecting office network switches","family":"cable","published":"2026-01-01","compatible":["office","travel"]},
+      {"id":"fan","text":"Replacement cooling fan for an office rack network switch","family":"cooling","published":"2026-01-01","compatible":["office"]},
+      {"id":"future-case","text":"Premium protective case for a portable travel router","family":"case","published":"2026-08-01","compatible":["travel"]}
+    ],
+    "interactions": [
+      {"user":"traveler","item":"router","date":"2026-02-01"},
+      {"user":"operator","item":"switch","date":"2026-03-01"},
+      {"user":"historical-a","item":"ethernet","date":"2026-02-01"},
+      {"user":"historical-b","item":"ethernet","date":"2026-03-01"},
+      {"user":"historical-c","item":"power-bank","date":"2026-04-01"},
+      {"user":"traveler","item":"router-case","date":"2026-07-01"},
+      {"user":"operator","item":"rack-kit","date":"2026-07-01"}
+    ],
+    "users":[{"id":"traveler","context":"travel"},{"id":"operator","context":"office"}]
+  },
+  "routing": {
+    "train":[
+      ["Show the current network device health","status"],
+      ["Check whether the router is online","status"],
+      ["Erase router settings and perform a factory reset","reset"],
+      ["Restore factory default configuration on the device","reset"],
+      ["Download a copy of the network configuration","export"],
+      ["Export a configuration backup file","export"]
+    ],
+    "development":[["Is my switch currently connected?","status"],["Delete all settings and reset the router","reset"],["Save the config as a backup file","export"],["Write a poem about the moon","abstain"],["Reset or export, which should I choose?","abstain"]],
+    "test":[["Report device uptime and connection health","status"],["Return this switch to its factory state","reset"],["I need a downloadable settings backup","export"],["Buy two airplane tickets","abstain"],["Explain the philosophy of consciousness","abstain"]]
+  },
+  "classification": {
+    "train":[
+      ["The invoice includes a duplicate charge","billing"],["Please refund the annual subscription payment","billing"],["Our credit card payment was declined","billing"],["The renewal price is incorrect","billing"],
+      ["I cannot sign in with my password","access"],["My login verification code expired","access"],["Please restore access to my locked account","access"],["The single sign on login failed","access"],
+      ["The router loses internet connectivity","network"],["Ethernet packets are dropping between switches","network"],["Wireless devices cannot reach the gateway","network"],["The WAN cable is disconnected","network"]
+    ],
+    "test":[["Why was I billed twice this month?","billing"],["Can you correct the amount on our receipt?","billing"],["The account rejects my sign in credentials","access"],["I am locked out after too many login attempts","access"],["Our office switch keeps losing its connection","network"],["The wireless network has frequent packet loss","network"],["Compose a birthday song","abstain"]]
+  },
+  "anomaly": {
+    "development":[["The payment receipt lists the wrong amount",false],["Router connection drops intermittently",false],["Write a dramatic monologue for a space pirate",true],["Tell me the recipe for chocolate cake",true]],
+    "test":[["I forgot my account password",false],["Our subscription invoice is duplicated",false],["Gateway cannot connect over Ethernet",false],["Find a hotel room near the beach",true],["Derive the orbit of a comet",true],["Compose a sonnet about wildflowers",true]]
+  }
+}

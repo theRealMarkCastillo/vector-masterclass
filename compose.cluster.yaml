@@ -1,0 +1,30 @@
+name: vector-masterclass-cluster
+x-node: &node
+  image: qdrant/qdrant:v1.17.1@sha256:94728574965d17c6485dd361aa3c0818b325b9016dac5ea6afec7b4b2700865f
+  profiles: [cluster]
+  environment:
+    QDRANT__CLUSTER__ENABLED: "true"
+    QDRANT__TELEMETRY_DISABLED: "true"
+  mem_limit: 1536m
+  cpus: 1
+  restart: "no"
+services:
+  node1:
+    <<: *node
+    command: ["./qdrant", "--uri", "http://node1:6335"]
+    ports: ["127.0.0.1:16333:6333"]
+    volumes: ["node1-data:/qdrant/storage"]
+  node2:
+    <<: *node
+    command: ["./qdrant", "--bootstrap", "http://node1:6335", "--uri", "http://node2:6335"]
+    ports: ["127.0.0.1:17333:6333"]
+    volumes: ["node2-data:/qdrant/storage"]
+  node3:
+    <<: *node
+    command: ["./qdrant", "--bootstrap", "http://node1:6335", "--uri", "http://node3:6335"]
+    ports: ["127.0.0.1:18333:6333"]
+    volumes: ["node3-data:/qdrant/storage"]
+volumes:
+  node1-data:
+  node2-data:
+  node3-data:

@@ -1,0 +1,18 @@
+name: vector-masterclass
+services:
+  qdrant:
+    image: qdrant/qdrant:v1.17.1@sha256:94728574965d17c6485dd361aa3c0818b325b9016dac5ea6afec7b4b2700865f
+    ports:
+      - "127.0.0.1:6333:6333"
+      - "127.0.0.1:6334:6334"
+    volumes:
+      - qdrant-data:/qdrant/storage
+      - qdrant-snapshots:/qdrant/snapshots
+    mem_limit: 6g
+    cpus: 4
+    environment:
+      QDRANT__TELEMETRY_DISABLED: "true"
+    restart: "no"
+volumes:
+  qdrant-data:
+  qdrant-snapshots:

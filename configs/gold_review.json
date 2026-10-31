@@ -1,0 +1,10 @@
+{
+  "status": "approved",
+  "reviewer": "user",
+  "approval": "Approve the listed labels",
+  "client_date": "2026-10-30",
+  "files": {
+    "datasets/course/corpus.jsonl": "6f49ee570eb2ab8efacfbab0a20445985b24ab7cb10cc21ec6dc849962822f5b",
+    "datasets/course/queries.jsonl": "2a1da9be570a1f8360e919dae4e4366defe880f4b81e15f0a3dc550ac349aa31"
+  }
+}

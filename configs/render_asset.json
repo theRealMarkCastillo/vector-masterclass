@@ -1,0 +1,8 @@
+{
+  "package": "MathJax",
+  "version": "3.2.2",
+  "license": "Apache-2.0",
+  "url": "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js",
+  "sha256": "d4295dc33744836935c1399feece5159577b34c5c8ffb9f1c6324cd82e03a882",
+  "bytes": 2108580
+}

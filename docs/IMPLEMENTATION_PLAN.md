@@ -1,33 +1,33 @@
 # Implementation plan
 
-Status: planned, no milestones executed. This plan implements curriculum revision 2 and the [lesson contracts](LESSON_CONTRACTS.md). All resource targets are provisional until M0. It does not authorize cloud deployment, paid services, or publication.
+Status: implementation in progress; observed milestone state is tracked in [PROGRESS.md](PROGRESS.md). This plan implements curriculum revision 3 and the [lesson contracts](LESSON_CONTRACTS.md). It does not authorize cloud deployment, paid services, or publication.
 
 ## Delivery rules
 
-- Build the complete small path before expanding to all lessons. Use Python/uv, Jupyter, real Qdrant in Compose, and CPU inference throughout.
+- Build the complete small path before expanding to all lessons. Use Python/uv, Jupyter, real Qdrant in Compose, and native macOS CPU/MPS inference with explicit device selection.
 - Pin compatible software and model artifacts after testing them. Record decisions and failed candidates; do not select versions solely because they are newest.
 - A milestone is complete only when code, instructional content, exercises, tests, fresh execution artifacts, and visual QA relevant to that milestone pass. A generated notebook file alone is not delivery.
 - Freeze evaluation conventions in M1 before changing chunking or retrieval. Tune on development data. Use the frozen test set at milestone comparisons, and version new holdouts if its results become tuning feedback.
-- Stage checks by cost: deterministic checks first, real-server integration next, CPU models and notebook execution next, optional scale/research runs last. Do not replace failed live checks with mock output.
+- Stage checks by cost: deterministic checks first, real-server integration next, local models and notebook execution next, optional scale/research runs last. Do not replace failed live checks with mock output.
 - Use local validation initially. Repository initialization is an implementation setup task if the workspace remains outside Git; commits, pushes, CI setup, and release publication are not part of this document-only planning step.
 
 ## Milestones and dependencies
 
-### M0 — CPU feasibility and concrete dependency decisions
+### M0 — Apple Silicon feasibility and concrete dependency decisions
 
 Dependencies: reviewed design. No user decisions block starting this milestone.
 
 Build a minimal uv environment and pinned single-node Compose service with loopback ports, persistent storage, readiness checks, and explicit reset behavior. Implement a preflight command and short diagnostic scripts before bulk notebook authoring.
 
-Choose and test a small dense encoder, CPU reranker, learned sparse encoder, and a local CPU generator/backend. Record model IDs, immutable revisions, licenses, tokenizer behavior, inference devices, dimensions, normalization, query/document prefixes, download bytes, and compatible Python/package/server versions. Check required platform wheels and container architecture. Keep advanced models outside the core dependency group/cache.
+Choose and test a small dense encoder, local reranker, learned sparse encoder, and a local CPU/MPS generator/backend. Record model IDs, immutable revisions, licenses, tokenizer behavior, inference devices, dimensions, normalization, query/document prefixes, download bytes, and compatible Python/package/server versions. Check required platform wheels and container architecture. Keep advanced models outside the core dependency group/cache.
 
 Choose the public benchmark and its small fixed subset using license, relevance-judgment quality, download size, and domain suitability. Define a compact fictional corpus with controlled failure cases and versioned source text. Public benchmark subset selection must not use model performance on the held-out queries.
 
-Run and retain evidence for CPU embedding, Qdrant insert/query, CPU reranking, sparse retrieval, and a real generated answer plus an unanswerable case. Measure fresh and warm timing and combined memory. Probe HNSW configuration/index-state diagnostics on the chosen server; determine how lesson 09 can justify its search-mode interpretation.
+Run and retain evidence for local embedding, Qdrant insert/query, local reranking, sparse retrieval, and a real generated answer plus an unanswerable case. Measure fresh and warm timing and combined memory. Probe HNSW configuration/index-state diagnostics on the chosen server; determine how lesson 09 can justify its search-mode interpretation.
 
 Outputs: `pyproject.toml`, `uv.lock`, `.python-version`, `compose.yaml`, preflight/bootstrap commands, `configs/models.*`, versioned dataset manifest, `docs/DECISIONS.md`, and `artifacts/<run_id>/pilot/`.
 
-Exit gate: reproducible smoke run on the documented machine; explicit CPU execution; pinned compatible artifacts; resource budgets accepted or revised with evidence; real local generation feasible; ANN experiment controls understood. If the generator exceeds the target, try a smaller suitable model or explicitly revise the live-profile budget before proceeding. A capability gap must remain visible.
+Exit gate: reproducible smoke run on the documented machine; explicit CPU/MPS execution with a CPU baseline; pinned compatible artifacts; resource budgets accepted or revised with evidence; real local generation feasible; ANN experiment controls understood. If the generator exceeds the target, try a smaller suitable model or explicitly revise the live-profile budget before proceeding. A capability gap must remain visible.
 
 ### M1 — Evaluation contract and first teaching slice
 
@@ -43,7 +43,7 @@ Exit gate: hand-computed fixtures cover all metric edge cases; exact and lexical
 
 Dependencies: M1.
 
-Implement the ingestion manifest, source-to-chunk provenance, interruption/retry handling, update/delete reconciliation, metadata indexes, ANN configuration/readiness checks, hybrid retrieval, CPU reranking, document grouping, diversity, and evidence assembly. Add notebooks 05b–11 and 12a.
+Implement the ingestion manifest, source-to-chunk provenance, interruption/retry handling, update/delete reconciliation, metadata indexes, ANN configuration/readiness checks, hybrid retrieval, local reranking, document grouping, diversity, and evidence assembly. Add notebooks 05b–11 and 12a.
 
 Use real-server integration checks for writes, queries, filters, and retries. Keep models and chunking configuration explicit; do not allow same-dimensional incompatible embeddings to be mixed silently. Enforce a query/index model-configuration match, not only a dimensionality check.
 
@@ -53,7 +53,7 @@ Exit gate: clean and resumed ingestion converge; updates and deletions propagate
 
 Dependencies: M2 and the M0 live-generation decision.
 
-Implement a small generator interface with one local CPU backend, bounded calls/timeouts, prompt/config logging without secrets, evidence IDs, and structured evaluation artifacts. Add 12b and 13a–13c, including real rewriting, contextual enrichment, and bounded iterative retrieval.
+Implement a small generator interface with one local CPU/MPS backend, bounded calls/timeouts, prompt/config logging without secrets, evidence IDs, and structured evaluation artifacts. Add 12b and 13a–13c, including real rewriting, contextual enrichment, and bounded iterative retrieval.
 
 Exit gate: real answers and transformations are recorded; citations resolve to source revisions; contradictory and unanswerable cases are scored; generation quality is separate from retrieval quality; fixtures cannot satisfy live completion checks. At least one regression/failure is explained rather than hidden. Record the cost of enrichment during ingestion separately from query-time work.
 
@@ -65,13 +65,13 @@ Build the serving API and lesson 24 first, using a minimal local authenticated-i
 
 Add recommendation, deduplication, semantic caching, routing, memory, classification, clustering, anomaly, multilingual, code, and image/text labs: 14, 15, 16a–16b, 17, 18a–18c, 19a–19c. Provide each application with its own small labeled dataset or explicit exploratory interpretation, task metrics, negative cases, and baseline.
 
-Exit gate: application-specific checks pass; temporal/source splits prevent leakage; cache invalidation, routing abstention, memory correction/deletion, and access restrictions are tested; image/text embeddings are actually produced on CPU; every notebook remains independently bootstrappable.
+Exit gate: application-specific checks pass; temporal/source splits prevent leakage; cache invalidation, routing abstention, memory correction/deletion, and access restrictions are tested; image/text embeddings are actually produced locally on the recorded CPU/MPS device; every notebook remains independently bootstrappable.
 
 ### M5 — Efficiency, lifecycle, and operations
 
 Dependencies: M4; M3 for live generator security checks.
 
-Add CPU inference tuning, vector quantization/rescoring, on-disk capacity, migration/backfill with change replay, observability/load, snapshot recovery, and adversarial tests. Deliver 20a–20c, 25–26, 27a, and 28. Provide the optional 27b multi-node Compose profile and its own resource preflight.
+Add CPU/MPS inference tuning, vector quantization/rescoring, on-disk capacity, migration/backfill with change replay, observability/load, snapshot recovery, and adversarial tests. Deliver 20a–20c, 25–26, 27a, and 28. Provide the optional 27b multi-node Compose profile and its own resource preflight.
 
 Implement bounded retries/concurrency and overload handling. Include stale permissions and deleted content in migration/recovery tests. Choose application SLOs and recovery objectives before the capstone run, then measure them. Revoke access in the authoritative policy fixture and verify all serving paths stop returning protected content. Document timing assumptions and race windows instead of claiming atomicity across stores.
 
@@ -81,7 +81,7 @@ Exit gate: restart persistence, interrupted writes, clean-target restore, migrat
 
 Dependencies: M2, M3, M5, and applicable prerequisites from the lesson contracts.
 
-Deliver 21, 22, and 23a–23d with separately pinned optional dependencies. Use real CPU computation for Matryoshka and a small late-interaction example. Validate MaxSim against hand-computed matrices. Compare long-context and retrieval-context modes using the same real generator within its limits.
+Deliver 21, 22, and 23a–23d with separately pinned optional dependencies. Use real local CPU/MPS computation for Matryoshka and a small late-interaction example. Validate MaxSim against hand-computed matrices. Compare long-context and retrieval-context modes using the same real generator within its limits.
 
 For visual documents and expensive graph/model preprocessing, prefer live tiny experiments where feasible. Otherwise package licensed, provenance-backed upstream artifacts and locally runnable scoring/analysis, with explicit replay status and recomputation instructions. Explain representation training, hard negatives, and distillation within the relevant lessons; do not imply a local reproduction of frontier training.
 
@@ -113,12 +113,12 @@ Exit gate: every required lesson is present and verified; resource instructions 
 
 | Decision | Proposed direction | Required by |
 | --- | --- | --- |
-| Reference hardware and supported platforms | Pilot on available Apple Silicon macOS; target a 16 GiB host envelope; advertise other platforms only after validation. | M0 exit |
+| Reference hardware and supported platforms | Pilot on available Apple Silicon macOS; target a 16 GiB host envelope; support macOS Apple Silicon only. | M0 exit |
 | Python/server/client/model versions | Select a compatible tested set; pin exact artifacts and licenses. | M0 exit |
-| Core encoder/reranker/sparse/generator | Small CPU models, explicit query/document behavior, real generation without paid services. | M0 exit |
+| Core encoder/reranker/sparse/generator | Small local CPU/MPS models, explicit query/document behavior, real generation without paid services. | M0 exit |
 | Public dataset and relevance conventions | Licensed small benchmark plus controlled fictional corpus; preserve immutable sources and review gold labels. | M0 dataset selection; M1 conventions/labels |
 | Corpus sizes and per-lesson budgets | Tiny/standard/scale profiles adjusted from measured pilot data. | M0 initial envelope; before each lesson release |
-| Advanced live versus replay boundaries | Prefer tiny CPU execution; disclose upstream replay and resource requirements. | M6 authoring start |
+| Advanced live versus replay boundaries | Prefer tiny local CPU/MPS execution; disclose upstream replay and resource requirements. | M6 authoring start |
 | SLO and recovery targets | Fix targets based on the reference deployment and task before final evaluation. | M5 benchmark design |
 
-These are bounded implementation decisions, not prerequisites for writing this plan. No additional service account, paid API, GPU, cloud environment, or new user approval is needed to begin the local pilot. If a measured limitation changes the agreed local/CPU scope, surface that specific decision before substituting an incompatible design.
+These are bounded implementation decisions, not prerequisites for writing this plan. No additional service account, paid API, cloud environment, or hardware purchase is needed to begin the local pilot. The existing Metal GPU is authorized. If a measured limitation changes the agreed local macOS scope, surface that specific decision before substituting an incompatible design.

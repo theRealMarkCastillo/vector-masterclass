@@ -1,8 +1,8 @@
 # Vector Storage Masterclass: curriculum and implementation blueprint
 
-Design date: October 30, 2026. Revision: 2, incorporating the design review. Status: ready for phased implementation planning; no runtime or performance claims have been validated in this workspace.
+Design date: October 30, 2026. Revision: 3, incorporating the design review and the macOS-only CPU/MPS scope update. Status: ready for phased implementation planning; no runtime or performance claims have been validated in this workspace.
 
-The [lesson contracts](LESSON_CONTRACTS.md) define executable lesson boundaries and completion evidence. The [implementation plan](IMPLEMENTATION_PLAN.md) defines delivery order, dependencies, and verification gates. Model choices, compatible dependency versions, and resource limits are finalized by the first CPU pilot, not assumed validated by this design.
+The [lesson contracts](LESSON_CONTRACTS.md) define executable lesson boundaries and completion evidence. The [implementation plan](IMPLEMENTATION_PLAN.md) defines delivery order, dependencies, and verification gates. Model choices, compatible dependency versions, and resource limits are finalized by the first Apple Silicon pilot, not assumed validated by this design.
 
 ## Outcome and scope
 
@@ -20,17 +20,17 @@ Planning estimate: 40–60 hours for the core course including exercises; anothe
 
 - Python and uv, with one project environment, a lockfile, a selected Python version, and an explicitly verified notebook kernel.
 - Qdrant server in local Docker Compose. Use the actual server for integration exercises; embedded/local client mode is not a substitute for server behavior.
-- CPU inference for embeddings, including on Apple Silicon: explicitly select CPU rather than silently using MPS or CUDA. Pin model revisions and record tokenization, prefixes, normalization, dimensions, and precision.
+- Target macOS on Apple Silicon only. Run Python and model inference natively on CPU or Metal through PyTorch MPS; Qdrant remains in the Linux Docker VM on CPU. Choose devices per model using measured latency, quality, and unified-memory cost. Pin model revisions and record actual device, tokenization, prefixes, normalization, dimensions, and precision. Requested MPS must fail clearly when unavailable; fallback is an explicit configuration decision.
 - Jupyter notebooks for explanations, executable experiments, visualizations, exercises, and interpretations. Shared implementation lives in a small Python package.
 - Default local operation after an explicit initial download of packages, container images, model weights, and datasets. Provide preflight checks for offline availability and artifact licenses/checksums.
-- Select a small dense encoder and small cross-encoder after a CPU pilot. Sentence Transformers is the proposed teaching interface; ONNX/FastEmbed is an optional comparison. Do not silently change models while comparing runtimes.
+- Select a small dense encoder and small cross-encoder after a Apple Silicon pilot. Sentence Transformers is the proposed teaching interface; ONNX/FastEmbed is an optional comparison. Do not silently change models while comparing runtimes.
 - Use NumPy, pandas, Matplotlib, and modest ipywidgets interaction. Export readable static versions of interactive results.
 - Avoid a mandatory orchestration framework. Teach the retrieval pipeline directly; framework adapters can be optional later.
 - A small versioned filesystem corpus and SQLite ingestion manifest are sufficient initially. Qdrant is a derived search index, with source content and provenance retained separately.
 - Add a small HTTP service, proposed FastAPI, when teaching serving and authorization. Early notebooks use the Qdrant client directly; security exercises use the service boundary.
-- Two execution profiles: retrieval-only and live RAG. Retrieval-only requires no generator. Completing the RAG track requires real generation, citation checking, and no-answer evaluation; completing the full masterclass includes that track. A small local CPU generator is the intended baseline, selected by the pilot. Hosted generation is an explicit optional adapter, not a prerequisite. An extractive evidence viewer or recorded fixture must be labeled accordingly and never represented as live generative RAG.
+- Two execution profiles: retrieval-only and live RAG. Retrieval-only requires no generator. Completing the RAG track requires real generation, citation checking, and no-answer evaluation; completing the full masterclass includes that track. A small local CPU/MPS generator is the intended baseline, selected by the pilot. Hosted generation is an explicit optional adapter, not a prerequisite. An extractive evidence viewer or recorded fixture must be labeled accordingly and never represented as live generative RAG.
 
-The CPU inference track should compare batching, thread counts, sequence lengths, cache behavior, and optional ONNX INT8 inference. Model-weight quantization and stored-vector quantization are separate experiments. Backend changes require quality checks, not just throughput measurements. See [Sentence Transformers efficiency documentation](https://www.sbert.net/docs/sentence_transformer/usage/efficiency.html). Follow [uv's Jupyter integration guidance](https://docs.astral.sh/uv/guides/integration/jupyter/) for kernel/environment alignment.
+The inference track compares CPU and MPS with identical model revisions, warmup, device synchronization, batching, thread counts, sequence lengths, and cache behavior. Optional ONNX INT8 remains a CPU-specific comparison. MLX is a possible later backend only if it offers a measured benefit worth another environment; it is not required for the initial implementation. Model-weight quantization and stored-vector quantization are separate experiments. Backend changes require quality checks, not just throughput measurements. See [Sentence Transformers efficiency documentation](https://www.sbert.net/docs/sentence_transformer/usage/efficiency.html). Follow [uv's Jupyter integration guidance](https://docs.astral.sh/uv/guides/integration/jupyter/) for kernel/environment alignment.
 
 ## Proposed notebook sequence
 
@@ -38,7 +38,7 @@ The numbers below identify topic families, not a promise of exactly 30 notebooks
 
 | ID | Topic and learning outcome | Experiment or visible evidence |
 | --- | --- | --- |
-| 00 | Environment, prerequisites, learning map | Verify CPU device, kernel, server version, model cache, and a tiny insert/query round trip. |
+| 00 | Environment, prerequisites, learning map | Verify selected CPU/MPS device, kernel, server version, model cache, and a tiny insert/query round trip. |
 | 01 | Vector geometry | Implement cosine, dot product, and Euclidean distance; visualize normalization and rankings on hand-checkable vectors. |
 | 02 | Embeddings and their limitations | Inspect tokenization, truncation, asymmetric query/document encoding, negation, identifiers, and semantic versus topical similarity. |
 | 03 | Exact retrieval and lexical baselines | Build NumPy exhaustive nearest-neighbor search and a BM25 baseline; show examples where each wins. |
@@ -49,7 +49,7 @@ The numbers below identify topic families, not a promise of exactly 30 notebooks
 | 08 | Metadata filters and access boundaries | Compare indexed filters and selectivity; exercise tenant, document-version, and temporal constraints. |
 | 09 | Approximate nearest-neighbor search | Use a dedicated ANN configuration and readiness gate; explain HNSW parameters, compare with exact results at matched filters, and plot recall/latency only when the intended index experiment is valid. |
 | 10 | Dense, sparse, and hybrid retrieval | Explain BM25 versus learned sparse representations; compare dense, lexical, sparse, and fusion on the same judgments. |
-| 11 | Reranking and diversity | Add a CPU cross-encoder; vary candidate count; implement MMR and document grouping; inspect gains and regressions. |
+| 11 | Reranking and diversity | Add a local cross-encoder; vary candidate count; implement MMR and document grouping; inspect gains and regressions. |
 | 12 | Evidence assembly and live RAG | 12a builds an evidence package without a generator. 12b requires real generation, citation-support checks, contradictory evidence, and no-answer tests to complete the RAG track. |
 | 13 | Model-assisted retrieval | Split live experiments into 13a query rewriting/decomposition, 13b generated contextual enrichment, and 13c bounded iterative retrieval. Include call budgets, failure cases, and comparisons with unmodified retrieval. |
 | 14 | Recommendation and discovery | Build content-based item recommendations with exclusions, diversity, freshness, and a temporal evaluation split. |
@@ -58,9 +58,9 @@ The numbers below identify topic families, not a promise of exactly 30 notebooks
 | 17 | Agent memory | Retrieve episodic records with timestamps and provenance; implement corrections, expiration, deletion, and access tests. |
 | 18 | Classification, clustering, and anomaly triage | Separate supervised neighbor voting, exploratory clustering, and anomaly triage into 18a–18c, each with distinct labels and success criteria. |
 | 19 | Multilingual, code, and multimodal retrieval | Separate multilingual, code, and image/text retrieval into 19a–19c; each selects appropriate encoders and its own evaluation slice. |
-| 20 | Storage and CPU efficiency | Separate CPU inference tuning (20a), stored-vector quantization/rescoring (20b), and on-disk storage/capacity (20c); keep one cost mechanism per experiment. |
+| 20 | Storage and inference efficiency | Separate CPU/MPS inference tuning (20a), stored-vector quantization/rescoring (20b), and on-disk storage/capacity (20c); keep one cost mechanism per experiment. |
 | 21 | Matryoshka and multi-stage retrieval | Use a compatible trained model for dimension reduction; compare candidate retrieval and full-resolution rescoring. |
-| 22 | Multi-vector late interaction | Implement MaxSim on hand-checkable matrices, then a small CPU-encoded example using Qdrant multivectors. |
+| 22 | Multi-vector late interaction | Implement MaxSim on hand-checkable matrices, then a small locally encoded example using Qdrant multivectors. |
 | 23 | Research extensions | Separate visual documents (23a), graph-assisted retrieval (23b), multi-vector compression (23c), and long-context alternatives (23d). Contracts distinguish live execution from replay or analysis. |
 | 24 | Serving architecture | Build request validation, timeouts, bounded concurrency, retries, authorization, batching, and tracing around the shared package. |
 | 25 | Index lifecycle and embedding migration | Backfill a new collection, handle concurrent changes, shadow queries, switch aliases, roll back, and validate deletion propagation. |
@@ -73,11 +73,11 @@ The retrieval and operations path is 00–11 (including 05a/05b), 12a, 20a–20c
 
 ### Execution and completion profiles
 
-Retrieval-only runs CPU embeddings and, when required, a CPU reranker. Live RAG additionally runs a real selected generator and records backend, model revision, prompt, decoding configuration, call count, and latency. Model-driven rewrites and contextual enrichment use the live profile. Supplied transformations may be used for isolated retrieval tests, but are labeled fixtures and do not satisfy live-profile completion checks.
+Retrieval-only runs local embeddings and, when required, a CPU reranker. Live RAG additionally runs a real selected generator and records backend, model revision, prompt, decoding configuration, call count, and latency. Model-driven rewrites and contextual enrichment use the live profile. Supplied transformations may be used for isolated retrieval tests, but are labeled fixtures and do not satisfy live-profile completion checks.
 
-Research notebooks may use provenance-backed replay artifacts when the full encoder exceeds the laptop budget. They must still execute their analysis/scoring cells locally, disclose which upstream work was precomputed, and provide recomputation instructions. Replay earns an analysis outcome, not evidence of live CPU model feasibility or reproduction of published performance.
+Research notebooks may use provenance-backed replay artifacts when the full encoder exceeds the laptop budget. They must still execute their analysis/scoring cells locally, disclose which upstream work was precomputed, and provide recomputation instructions. Replay earns an analysis outcome, not evidence of live local-model feasibility or reproduction of published performance.
 
-The initial supported platform is macOS on Apple Silicon, matching the development environment; broader platform support requires independent smoke checks. Proposed pilot envelope: a 16 GiB host, up to 6 GiB allocated to the default Qdrant container, and a 20 GiB combined core download/cache/data budget. These are design targets, not measured minimum requirements. Run memory-heavy stages sequentially; record host peak memory including Docker and Python. The pilot must reduce data/model size or revise the published requirements if these targets cannot be met. Multi-node and research profiles declare separate budgets and do not silently raise the core requirement.
+The supported platform is macOS on Apple Silicon only. Windows, Linux learner hosts, Intel Macs, and CUDA are outside the course support scope. Docker runs Qdrant, while models run natively to access Metal. Proposed pilot envelope: a 16 GiB host, up to 6 GiB allocated to the default Qdrant container, and a 20 GiB combined core download/cache/data budget. These are design targets, not measured minimum requirements. Run memory-heavy stages sequentially; record host memory pressure and Python/Docker memory, plus MPS allocated/driver memory separately to avoid assuming unified-memory allocations are disjoint. The pilot must reduce data/model size or revise the published requirements if these targets cannot be met. Multi-node and research profiles declare separate budgets and do not silently raise the core requirement.
 
 ## Advanced coverage and research boundaries
 
@@ -86,7 +86,7 @@ The initial supported platform is macOS on Apple Silicon, matching the developme
 - Late interaction: token-level representations and MaxSim, with explicit storage and compute comparisons. A Qdrant MaxSim demonstration does not reproduce the complete ColBERTv2 training, compression, or serving stack. [ColBERTv2](https://arxiv.org/abs/2112.01488)
 - Contextual retrieval: enrich chunks with document context and measure effects independently of fusion and reranking. Generated context adds ingestion cost and can introduce errors. [Anthropic's method and experiments](https://www.anthropic.com/research/contextual-retrieval)
 - Graph-assisted retrieval: compare relationship traversal and corpus-wide summarization with ordinary retrieval. Qdrant can retrieve vectorized entities or summaries; graph construction/traversal is an additional component, not a native substitute supplied by vector storage. [GraphRAG query modes](https://microsoft.github.io/graphrag/query/overview/)
-- Visual document retrieval: study page-image multi-vector representations and the cost of preserving layout. Heavy encoders may require labeled precomputed artifacts for the normal lesson; provide CPU recomputation instructions and realistic resource limits before calling a lab executable. [ColPali](https://arxiv.org/abs/2407.01449)
+- Visual document retrieval: study page-image multi-vector representations and the cost of preserving layout. Heavy encoders may require labeled precomputed artifacts for the normal lesson; provide Apple Silicon recomputation instructions and realistic resource limits before calling a lab executable. [ColPali](https://arxiv.org/abs/2407.01449)
 - Multi-vector compression: explain fixed-dimensional encodings, candidate recall, and exact late-interaction rescoring. A pedagogical implementation is not a performance reproduction of the research system. [MUVERA](https://research.google/blog/muvera-making-multi-vector-retrieval-as-fast-as-single-vector-search/)
 - Representation adaptation: teach contrastive objectives, hard negatives, distillation, domain adaptation, and evaluation leakage. A tiny CPU training exercise can demonstrate mechanics; frontier-scale training is outside the local course budget.
 - Cover HNSW versus IVF/PQ, disk-oriented ANN, flat scans, and search-engine/database alternatives conceptually. Clearly label algorithms that are not implemented by the pinned Qdrant configuration.
@@ -98,11 +98,11 @@ The initial supported platform is macOS on Apple Silicon, matching the developme
 flowchart LR
     S[Versioned source corpus] --> P[Parse, normalize, chunk]
     P --> M[Manifest and provenance]
-    P --> E[CPU embedding pipeline]
+    P --> E[local embedding pipeline]
     E --> Q[Qdrant in Docker Compose]
     N[Jupyter lessons and experiments] --> L[Shared Python package]
     A[Serving API: identity and policy] --> L
-    L --> QE[CPU query encoder]
+    L --> QE[Local query encoder]
     QE --> Q
     Q --> R[Candidate reranking and context]
     R --> D[Search, recommendations, memory, cache]
@@ -122,7 +122,7 @@ Use a fictional engineering support corpus across the core course: manuals, rele
 
 Complement it with a small licensed real-world retrieval benchmark for external validity. Synthetic cases provide controlled failures but cannot establish general retrieval quality. Add small application-specific datasets for recommendations and multimodal work rather than forcing every task into one corpus.
 
-Provide three dataset profiles, with sizes adjusted after the CPU pilot:
+Provide three dataset profiles, with sizes adjusted after the Apple Silicon pilot:
 
 - Tiny: hundreds of chunks and hand-checkable relevance judgments for fast demonstrations.
 - Standard: thousands to tens of thousands of chunks for realistic notebook comparisons.
@@ -148,7 +148,7 @@ Use the pinned server version's documented controls to make the intended search 
 
 Compare approximate and exhaustive results on the same frozen eligible points and distance metric with explicit ties. Record ingestion, index construction, and query timings separately. Measure quality and index fidelity under quiescent data; reserve concurrent mutations for the life-of-a-write and serving labs.
 
-Every run records corpus hash, query/judgment version, git revision when available, model revision, configuration, seed, server/client versions, CPU/OS, Docker resource allocation, warm/cold cache state, timings, and measured outputs. Separate download/setup, embedding, ingestion, indexing, and steady-state query times. Never invent benchmark results or fill missing metrics with illustrative values without an explicit label.
+Every run records corpus hash, query/judgment version, git revision when available, model revision, configuration, seed, server/client versions, CPU/GPU/device/OS, Docker resource allocation, warm/cold cache state, timings, and measured outputs. Separate download/setup, embedding, ingestion, indexing, and steady-state query times. Never invent benchmark results or fill missing metrics with illustrative values without an explicit label.
 
 ## Testing and acceptance criteria
 
@@ -225,11 +225,11 @@ This runtime tree is a proposal; the current deliverables are design, lesson-con
 
 ## Implementation sequence and decision gates
 
-1. Build one vertical slice: uv/Jupyter, pinned Compose Qdrant, CPU encoder, tiny corpus, exact and lexical baselines, retrieval metrics, and the first few lessons. Validate install, rerun, export, and plot readability.
+1. Build one vertical slice: uv/Jupyter, pinned Compose Qdrant, local encoder, tiny corpus, exact and lexical baselines, retrieval metrics, and the first few lessons. Validate install, rerun, export, and plot readability.
 2. Complete the core retrieval path through storage behavior, ingestion, filters, ANN, hybrid retrieval, reranking, and evidence assembly. Tune on development queries; reserve frozen test queries for milestone comparisons and do not repeatedly optimize against them.
 3. Add non-RAG application labs with their own task metrics and negative cases.
 4. Add serving, security, lifecycle, migration, observability, and recovery, using the same tested implementation from the notebooks.
-5. Add advanced CPU experiments and clearly labeled research/replay extensions. Select exact models and methods based on measured feasibility rather than paper prominence.
+5. Add advanced CPU/MPS experiments and clearly labeled research/replay extensions. Select exact models and methods based on measured feasibility rather than paper prominence.
 6. Pilot the course, revise runtime estimates, and finish the capstone, instructor runbook, and reproducible artifacts.
 
-Select the local CPU generation backend and model during the pilot, before authoring the live-RAG track. Include a real answer with supported citations and an unanswerable case in that feasibility check. If a suitable model cannot meet the declared envelope, revise the profile explicitly; do not replace the required live exercise with a fixture. Detailed milestones and unresolved pilot decisions are tracked in the [implementation plan](IMPLEMENTATION_PLAN.md).
+Select the local CPU/MPS generation backend and model during the pilot, before authoring the live-RAG track. Include a real answer with supported citations and an unanswerable case in that feasibility check. If a suitable model cannot meet the declared envelope, revise the profile explicitly; do not replace the required live exercise with a fixture. Detailed milestones and unresolved pilot decisions are tracked in the [implementation plan](IMPLEMENTATION_PLAN.md).

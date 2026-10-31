@@ -1,0 +1,6 @@
+{
+  "scope": "Local teaching deployment, fixed before the M5 load/recovery runs; not a production promise",
+  "load": {"warm_serial_samples": 100, "successful_warm_serial_p95_ms": 1000, "successful_warm_serial_fraction": 0.99, "overload_status": 429},
+  "recovery": {"rto_seconds": 120, "rpo_journal_events": 0, "meaning": "zero missing committed source changes after ordered journal replay; snapshot alone may be stale"},
+  "security": {"cross_tenant_exposures": 0, "revoked_or_deleted_source_exposures": 0}
+}

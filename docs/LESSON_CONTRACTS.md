@@ -1,6 +1,6 @@
 # Lesson contracts
 
-Status: design contracts, not completed notebooks. These contracts implement the [curriculum](CURRICULUM.md) and are delivered through the [implementation plan](IMPLEMENTATION_PLAN.md).
+Status: all lesson files are authored; final validation is tracked in [PROGRESS.md](PROGRESS.md). These contracts implement the [curriculum](CURRICULUM.md) and are delivered through the [implementation plan](IMPLEMENTATION_PLAN.md).
 
 ## Common execution contract
 
@@ -13,8 +13,8 @@ The profiles below are provisional authoring budgets for the selected tiny or st
 | Profile | Runtime target | Peak application memory target | Incremental download target | Execution meaning |
 | --- | --- | --- | --- | --- |
 | T | 2 minutes | 4 GiB | 0.5 GiB | Tiny deterministic or small-model demonstration. |
-| B | 10 minutes | 10 GiB | 2 GiB | CPU retrieval/index experiment with real Qdrant where relevant. |
-| G | 20 minutes | 12 GiB | 4 GiB | Real local CPU generation; models may be loaded sequentially to stay within the total budget. |
+| B | 10 minutes | 10 GiB | 2 GiB | Local retrieval/index experiment with real Qdrant where relevant. |
+| G | 20 minutes | 12 GiB | 4 GiB | Real local CPU/MPS generation; models may be loaded sequentially to stay within the total budget. |
 | O | 60 minutes | 12 GiB | 8 GiB | Opt-in research, extended benchmark, or multi-node experiment; publish any pilot-required override separately. |
 
 M0 must confirm or revise these budgets and write numeric limits into each runnable lesson's metadata before release. A timeout, out-of-memory condition, missing model, or absent server fails a required live check; it must not silently produce a passing replay. Heavy research encoder recomputation may have a separate declared resource envelope; the local analysis path remains bounded and labeled. Each lesson records actual artifact download bytes at bootstrap.
@@ -25,7 +25,7 @@ IDs are stable topic-family identifiers with suffixes where the review split a f
 
 | ID | Prerequisites | Profile | Primary experiment and required result | Completion check |
 | --- | --- | --- | --- | --- |
-| 00 | None | T | Preflight and one CPU-embedded Qdrant insert/query round trip. | Kernel, device, pinned versions, persistent storage, and cache availability match configuration. |
+| 00 | None | T | Preflight and one locally embedded Qdrant insert/query round trip. | Kernel, device, pinned versions, persistent storage, and cache availability match configuration. |
 | 01 | 00 | T | Hand-built vector distance/ranking table and geometric plot. | Scores and rankings match hand-computed cases, including normalization effects. |
 | 02 | 01 | B | Embedding behavior on identifiers, negation, truncation, and query/document roles. | Model revision, token limits, prefixes, normalization, and failure examples are recorded. |
 | 03 | 02 | B | NumPy exhaustive retrieval versus BM25 on the same corpus. | Exhaustive math matches fixtures; lexical and semantic successes/failures are displayed. |
@@ -37,7 +37,7 @@ IDs are stable topic-family identifiers with suffixes where the review split a f
 | 08 | 06 | B | Payload filtering at varying selectivity and access constraints. | Eligible result sets match exact fixtures; tenant/version constraints hold. |
 | 09 | 04, 05b, 08 | B | HNSW parameter sweep with dedicated index-readiness and search-mode evidence. | Validity gate passes or report explicitly declares experiment inconclusive; exact comparison uses identical eligible points. |
 | 10 | 03, 04, 08, 09 | B | Dense, BM25, learned sparse, and fused retrieval comparison. | Same development queries and eligible corpus; rank fusion is hand-checked; failures are inspected. |
-| 11 | 10 | B | Candidate reranking with CPU cross-encoder and diversity/grouping diagnostics. | Candidate limits, stage timings, document diversity, and held-out quality are recorded. |
+| 11 | 10 | B | Candidate reranking with local cross-encoder and diversity/grouping diagnostics. | Candidate limits, stage timings, document diversity, and held-out quality are recorded. |
 | 12a | 07, 11 | T | Assemble traceable evidence into a bounded context window. | Every citation maps to a source revision/span; packing respects the pinned tokenizer budget. |
 | 12b | 12a, M0 generator decision | G | Generate answers from retrieved evidence, including contradictory and unanswerable cases. | Real inference trace exists; correctness, citation support, and abstention are scored separately from retrieval. |
 | 13a | 12b | G | Model-generated rewriting/decomposition compared with original-query retrieval. | Real transformations, retrieval deltas, failure cases, and call/time budgets are recorded. |
@@ -53,12 +53,12 @@ IDs are stable topic-family identifiers with suffixes where the review split a f
 | 18c | 04, 18b | B | Neighbor-density anomaly scoring on labeled injected anomalies and normal cases. | Threshold false-positive/false-negative behavior is measured; anomaly is not equated with wrongdoing. |
 | 19a | 04, 10 | B | Cross-language retrieval using a suitable multilingual encoder. | Language-specific quality slices and incompatible-space failures are recorded. |
 | 19b | 04, 10 | B | Code search using identifier and natural-language queries. | Lexical baseline, source-family split, and retrieval failures are present. |
-| 19c | 04, 05a | B | Small image/text search using an aligned multimodal encoder. | Real CPU image and text encoding share a compatible space; curated matches and failures are checked. |
-| 20a | 02, 04 | B | CPU batch/thread/sequence-length tuning, with optional backend comparison. | Quality is checked alongside throughput; identical model artifacts are used for backend comparisons. |
+| 19c | 04, 05a | B | Small image/text search using an aligned multimodal encoder. | Real CPU/MPS image and text encoding share a compatible space; curated matches and failures are checked. |
+| 20a | 02, 04 | B | CPU versus MPS batch/thread/sequence-length tuning, with optional backend comparison. | Quality is checked alongside throughput; identical model artifacts are used for backend comparisons. |
 | 20b | 09 | B | Stored-vector quantization and rescoring versus full precision. | Exact/ANN fidelity and semantic quality remain distinct; actual storage and latency are reported. |
 | 20c | 05b, 09 | B | On-disk storage and memory/capacity accounting. | Raw-vector estimates are reconciled with measured payload/index/disk/memory overhead. |
 | 21 | 09, 20b | B | Truncate a compatible Matryoshka model and rescore full vectors. | Dimensions, quality, storage, and candidate recall are measured; ordinary arbitrary truncation is distinguished. |
-| 22 | 05a, 11 | B | Hand-check MaxSim then run a small CPU-encoded late-interaction search. | Matrix scores agree with reference math; Qdrant results and multi-vector cost are measured. |
+| 22 | 05a, 11 | B | Hand-check MaxSim then run a small locally encoded late-interaction search. | Matrix scores agree with reference math; Qdrant results and multi-vector cost are measured. |
 | 23a | 19c, 22 | O | Visual-document retrieval over small pages, live if feasible or labeled upstream replay. | Provenance, local scoring/analysis, layout-sensitive examples, and live/replay boundary are explicit. |
 | 23b | 12b, 13c | O | Graph-assisted retrieval on a small explicit graph versus ordinary retrieval. | Graph construction source is labeled; traversal is external to Qdrant; benefit/cost or regression is reported. |
 | 23c | 22 | O | Pedagogical multi-vector compression/candidate retrieval with MaxSim rescoring. | Candidate recall and cost are measured; report does not claim a full research-system reproduction. |
