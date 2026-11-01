@@ -1,0 +1,11 @@
+# Generated, vendor, and build artifacts excluded from Tree-sitter AST indexing
+vendor/
+node_modules/
+dist/
+build/
+coverage/
+**/*.min.js
+**/*.bundle.js
+**/*.pb.go
+**/*.generated.ts
+**/*.gen.go

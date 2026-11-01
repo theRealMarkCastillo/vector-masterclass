@@ -1,0 +1,6 @@
+# Noisy or high-churn files excluded from entire-brain memory indexing
+CHANGELOG.md
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+go.sum
