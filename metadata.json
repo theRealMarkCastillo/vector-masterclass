@@ -1,0 +1,68 @@
+{
+  "cli_version": "0.12.2",
+  "checkpoint_id": "01M6BREDJCVTG96EDH3CAPNNC8",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "notebooks/12b_live_rag_and_separate_quality_signals.ipynb",
+    "notebooks/13a_model_generated_query_transformations.ipynb",
+    "notebooks/13b_contextual_enrichment_without_rewriting_evidence.ipynb",
+    "notebooks/13c_bounded_iterative_retrieval.ipynb",
+    "notebooks/14_recommendations_without_future_leakage.ipynb",
+    "notebooks/15_duplicate_candidates_are_not_merge_decisions.ipynb",
+    "notebooks/16a_semantic_caches_need_exact_context.ipynb",
+    "notebooks/16b_routing_with_abstention_and_separate_authority.ipynb",
+    "notebooks/17_memory_needs_correction_and_forgetting.ipynb",
+    "notebooks/18a_nearest_neighbor_classification.ipynb",
+    "notebooks/18b_clusters_are_hypotheses_to_inspect.ipynb",
+    "notebooks/18c_anomaly_scores_need_a_reference_population.ipynb",
+    "notebooks/19a_multilingual_retrieval_and_representation_contracts.ipynb",
+    "notebooks/19b_code_search_needs_identifiers_and_intent.ipynb",
+    "notebooks/19c_aligned_image_and_text_search.ipynb",
+    "notebooks/20a_cpu_and_metal_inference_tuning.ipynb",
+    "notebooks/20b_quantization_and_rescoring.ipynb",
+    "notebooks/20c_on-disk_capacity_and_memory_accounting.ipynb",
+    "notebooks/21_matryoshka_representations_and_full-vector_rescoring.ipynb",
+    "notebooks/22_late_interaction_and_maxsim.ipynb",
+    "notebooks/23a_visual_documents_and_the_limits_of_pooled_crops.ipynb",
+    "notebooks/23b_graph-assisted_retrieval_with_explicit_provenance.ipynb",
+    "notebooks/23c_compressed_candidates_and_exact_token_rescoring.ipynb",
+    "notebooks/23d_longer_context_versus_retrieved_context.ipynb",
+    "notebooks/24_serving_retrieval_with_bounded_work.ipynb",
+    "notebooks/25_migration_cutover_and_rollback.ipynb",
+    "notebooks/27b_optional_three-node_replication_drill.ipynb",
+    "notebooks/28_adversarial_retrieval_and_live_prompt_injection.ipynb",
+    "notebooks/29_capstone_evidence_and_design_defense.ipynb"
+  ],
+  "sessions": [
+    {
+      "metadata": "/0/metadata.json",
+      "transcript": "/0/full.jsonl",
+      "compact_transcript": "/0/transcript.jsonl",
+      "content_hash": "/0/content_hash.txt",
+      "prompt": "/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 19866,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 98944,
+    "output_tokens": 886,
+    "api_call_count": 4
+  },
+  "redaction": {
+    "replacements": 3,
+    "layers": {
+      "betterleaks": 0,
+      "connection_string": 0,
+      "credential_key": 0,
+      "credential_value": 0,
+      "credentialed_uri": 0,
+      "entropy": 3,
+      "key_context": 0,
+      "provider_token": 0,
+      "shell_stdin": 0
+    }
+  }
+}
