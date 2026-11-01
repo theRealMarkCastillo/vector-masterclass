@@ -20,3 +20,4 @@ datasets/downloads/
 data/
 dist/
 .claude/settings.local.json
+.entire/redactors/local/
