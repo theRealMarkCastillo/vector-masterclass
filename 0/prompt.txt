@@ -1,0 +1,1 @@
+oh ... we can use apple silicon cpu and gpu if needed. this should be macos only. we can lift that limitation of CPU only and still use GPU if needed and makes more sense
