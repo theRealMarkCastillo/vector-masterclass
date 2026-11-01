@@ -1,0 +1,9 @@
+create remote private repo in gh and push
+
+---
+
+ok what needs to stay local and put in gitignore? for things like entire.io files
+
+---
+
+ok make any changes needed
