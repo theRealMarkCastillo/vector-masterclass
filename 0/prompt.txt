@@ -1,0 +1,21 @@
+is entire.io properly set up for this repo?
+
+---
+
+ok what do we need to fix. also are skills properly available and any tools? plugins?
+
+---
+
+also which files need to stay local and which files need to be in repo for entire config? ok let's remove the aws-mcp and fix all the other stuff
+
+---
+
+ok we are good now?
+
+---
+
+we don't use brain anymore
+
+---
+
+ok cleanup and then commit
